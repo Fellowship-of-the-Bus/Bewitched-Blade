@@ -5,7 +5,7 @@ import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 import BewitchedBlade.{Height,Width}
 
 import menu.Menu
-
+import game._
 class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {
  // import gameObject._
  // import Mode._
@@ -13,7 +13,7 @@ class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {
   def initStatesList(gc: GameContainer) = {
     gc.setShowFPS(true)
     addState(Menu)
-   // addState(BewitchedBlade.game)
+    addState(BewitchedBlade.game)
   }
 }
 
@@ -25,7 +25,7 @@ object BewitchedBlade extends App {
   val Width = 800
   val Height = 600
   val FrameRate = 60
-  // val game = new Game
+  val game = new GameState
 
   try {
     println("Library path is: " + System.getProperty("java.library.path"))

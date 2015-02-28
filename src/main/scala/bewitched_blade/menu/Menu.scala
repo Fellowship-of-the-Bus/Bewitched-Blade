@@ -15,11 +15,13 @@ object MenuTimer {
 }
 
 object Menu extends BasicGameState {
+
   private implicit var input: Input = null
+  var SBGame: StateBasedGame = null
 
   val centerx = Width/2-Button.width/2
   lazy val choices = List(
-    Button("Play Game", centerx, 200, () => println("play game")),
+    Button("Play Game", centerx, 200, () => SBGame.enterState(Mode.GameID)),
     Button("Options", centerx, 200+30, () => println("options")), 
     Button("Quit", centerx, 200+60, () => System.exit(0)))
 
@@ -62,6 +64,7 @@ object Menu extends BasicGameState {
 
   def init(gc: GameContainer, game: StateBasedGame) = {
     input = gc.getInput
+    SBGame = game
   }
 
   def getID() = Mode.MenuID

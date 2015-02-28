@@ -1,5 +1,6 @@
-package com.github.fellowship_of_the_bus.bewitched_blade.game
-import spaceInvader.SpaceInvader._
+package com.github.fellowship_of_the_bus.bewitched_blade
+package game
+import BewitchedBlade._
 
 object IDMap{
   val bladeID = 1
@@ -11,6 +12,12 @@ object IDMap{
 
   lazy val images = imageMap.map { x =>
     val (id, loc) = x
-    id -> makeImg(loc)
+    val temp = makeImg(loc)      
+    if (id == bladeID) {
+      temp.setCenterOfRotation(10,10)
+    }
+
+    id -> temp
+
   }
 }

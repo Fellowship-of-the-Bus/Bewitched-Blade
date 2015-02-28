@@ -1,4 +1,4 @@
-package com.github.fellowship_of_the_bus.bewitched_blade.menu
+package com.github.fellowship_of_the_bus.bewitched_blade
 
 object Mode {
   val MenuID = 0
