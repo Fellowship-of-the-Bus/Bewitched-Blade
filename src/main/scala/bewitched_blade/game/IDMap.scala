@@ -14,7 +14,7 @@ object IDMap{
     val (id, loc) = x
     val temp = makeImg(loc)      
     if (id == bladeID) {
-      temp.setCenterOfRotation(10,10)
+      temp.setCenterOfRotation(0,0)
     }
 
     id -> temp

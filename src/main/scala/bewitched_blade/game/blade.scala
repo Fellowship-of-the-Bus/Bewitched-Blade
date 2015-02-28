@@ -1,5 +1,5 @@
 package com.github.fellowship_of_the_bus.bewitched_blade.game
-import scala.math.{atan2, toDegrees, sqrt}
+import scala.math.{atan2, toDegrees, sqrt, abs}
 import org.newdawn.slick.{Graphics, Image}
 
 class Blade (xc : Float, yc : Float) {
@@ -15,8 +15,8 @@ class Blade (xc : Float, yc : Float) {
     val hiltWidth = 20
     val bladeLen = 60
     val bladeWidth = 20
-    val accel = 1
-    val angAccel = 16 // 960 per sec
+    val accel = 0.5f
+    val angAccel = 0.5f // 60 per sec
 
     def move(mx : Float, my : Float) = {
     	var xVec = mx - x
@@ -27,27 +27,57 @@ class Blade (xc : Float, yc : Float) {
     	var dTheta = ((mTheta - ang) + 360) % 360
     	if (dTheta < 180) {
     		angVel += angAccel
+        if (angVel > 359) {
+          angVel = 359
+        }
     	} else {
     		angVel -= angAccel
+        if (angVel < -359) {
+          angVel = -359
+        }
     	}
 
-        if (angVel >  dTheta) {
-            ang = mTheta.asInstanceOf[Float]
-        } else {
-            ang =  (ang + angVel) % 360
-        }
-
-    	var xAcc = xVec / sqrt((xVec * xVec) + (yVec * yVec)) * accel
-    	var yAcc = yVec / sqrt((xVec * xVec) + (yVec * yVec)) * accel
+      if (abs(angVel) >  abs(dTheta) && angVel*dTheta > 0) {
+      ang = mTheta.asInstanceOf[Float]
+        angVel = 0
+      } else {
+        ang =  (ang + angVel) % 360
+      }
+//      ang = mTheta.asInstanceOf[Float]
+      var norm = sqrt((xVec * xVec) + (yVec * yVec)) 
+      if (norm < 0.01) {
+          norm = 0.1
+      }
+      if (abs(dTheta) < 20 && norm < 70 || norm < 50) {
+         angVel = 0
+         xVel = 0
+         yVel = 0
+      } else {
+    	var xAcc = xVec / norm * accel
+    	var yAcc = yVec / norm * accel
     	xVel += xAcc.asInstanceOf[Float]
     	yVel += yAcc.asInstanceOf[Float]
-    	x += xVel
-    	y += yVel
+      
+      if (xVec * xVel > 0 && abs(xVel) > abs(xVec)) {
+        x += xVec
+        xVel = xVel * 0.2f
+      } else {
+        x += xVel
+      }
+      if (yVec * yVel > 0 && abs(yVel) > abs(yVec)) {
+        y += yVec
+        yVel = yVel * 0.2f
+      } else {
+        y += yVel
+      }
+      }
     }
 
     def draw(g: Graphics, i: Image) {
+
+        i.setCenterOfRotation(10,10)
         i.setRotation(ang)
-        g.drawImage(i, x, y)
+        g.drawImage(i, x-20, y-20)
     }
 
     // def topLeftCoord() = (x-width/2, y-height/2)
