@@ -4,13 +4,15 @@ import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickExcept
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 import BewitchedBlade.{Height,Width}
 
+import menu.Menu
+
 class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {
  // import gameObject._
  // import Mode._
     
   def initStatesList(gc: GameContainer) = {
     gc.setShowFPS(true)
-   // addState(Menu)
+    addState(Menu)
    // addState(BewitchedBlade.game)
   }
 }

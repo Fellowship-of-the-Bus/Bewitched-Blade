@@ -1,4 +1,4 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus.bewitched_blade.menu
 
 object Mode {
   val MenuID = 0
@@ -6,4 +6,5 @@ object Mode {
   val PauseID = 2
   val OptionsID = 3
   val GameOverID = 4
+  val KeyBindOptionID = 5
 }
