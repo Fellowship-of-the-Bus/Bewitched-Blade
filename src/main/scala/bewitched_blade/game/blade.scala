@@ -8,7 +8,7 @@ class Blade (xc : Float, yc : Float) {
     var ang: Float = 0
     var xVel: Float = 0
     var yVel: Float = 0
-    var angVel :Float = 0
+    var angVel: Float = 0
     def id = 1
 
     val hiltLen = 20
@@ -30,7 +30,11 @@ class Blade (xc : Float, yc : Float) {
     	} else {
     		angVel -= angAccel
     	}
-    	ang =  (ang + angVel) % 360
+        if (angVel >  dTheta) {
+            angVel = dTheta.asInstanceOf[Float]
+        } else {
+            ang =  (ang + angVel) % 360
+        }
 
     	var xAcc = xVec / sqrt((xVec * xVec) + (yVec * yVec)) * accel
     	var yAcc = yVec / sqrt((xVec * xVec) + (yVec * yVec)) * accel
@@ -42,7 +46,7 @@ class Blade (xc : Float, yc : Float) {
 
     def draw(g: Graphics, i: Image) {
         i.setRotation(ang)
-        i.draw(x, y)
+        g.drawImage(i, x, y)
     }
 
     // def topLeftCoord() = (x-width/2, y-height/2)
