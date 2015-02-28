@@ -15,8 +15,8 @@ class Blade (xc : Float, yc : Float) {
     val hiltWidth = 20
     val bladeLen = 60
     val bladeWidth = 20
-    val accel = 0.5f
-    val angAccel = 0.5f // 60 per sec
+    val accel = 1f
+    val angAccel = 1f // 60 per sec
 
     def move(mx : Float, my : Float) = {
     	var xVec = mx - x
@@ -71,6 +71,9 @@ class Blade (xc : Float, yc : Float) {
         y += yVel
       }
       }
+      xVel = xVel * 0.9f
+      yVel = yVel * 0.9f
+      angVel = angVel * 0.9f
     }
 
     def draw(g: Graphics, i: Image) {
