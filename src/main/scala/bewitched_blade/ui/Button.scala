@@ -43,15 +43,16 @@ class Button(text: String, x: Float, y: Float, width: Float, height: Float, acti
     }
   }
 
+  val LEFT = 0
   override def mousePressed(button: Int, x: Int, y: Int): Unit = {
-    if (mode == MOUSE_OVER) {
+    if (mode == MOUSE_OVER && button == LEFT) {
       mode = MOUSE_DOWN
     }
   }
 
   override def mouseReleased(button: Int, x: Int, y: Int): Unit = {
     val in = inButton(x, y)
-    if (mode == MOUSE_DOWN && in) {
+    if (mode == MOUSE_DOWN && button == LEFT && in) {
       action()
     }
     if (in) mode = MOUSE_OVER
