@@ -30,8 +30,9 @@ class Blade (xc : Float, yc : Float) {
     	} else {
     		angVel -= angAccel
     	}
+
         if (angVel >  dTheta) {
-            angVel = dTheta.asInstanceOf[Float]
+            ang = mTheta.asInstanceOf[Float]
         } else {
             ang =  (ang + angVel) % 360
         }
