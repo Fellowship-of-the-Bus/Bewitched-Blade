@@ -8,7 +8,7 @@ import BewitchedBlade.{Height,Width}
 class Game {
   var blade = new Blade(300,400)
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
-    //implicit val input = gc.getInput
-    blade.move(10,10)
+    implicit val input = gc.getInput
+    blade.move(input.getMouseX,input.getMouseY)
   }
 }
