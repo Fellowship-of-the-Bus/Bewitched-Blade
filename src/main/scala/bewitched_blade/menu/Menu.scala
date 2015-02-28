@@ -1,6 +1,9 @@
 package com.github.fellowship_of_the_bus.bewitched_blade
 package menu
 
+import ui.Button
+import BewitchedBlade.{Width, Height}
+
 import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image, KeyListener}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
@@ -12,9 +15,13 @@ object MenuTimer {
 }
 
 object Menu extends BasicGameState {
+  private implicit var input: Input = null
 
-  val choices = List("Play Game", "Options", "Quit")
-  var curChoice = 0
+  val centerx = Width/2-Button.width/2
+  lazy val choices = List(
+    Button("Play Game", centerx, 200, () => println("play game")),
+    Button("Options", centerx, 200+30, () => println("options")), 
+    Button("Quit", centerx, 200+60, () => System.exit(0)))
 
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     import Mode._
@@ -46,21 +53,15 @@ object Menu extends BasicGameState {
     import BewitchedBlade.{Width, Height}
     //g.drawImage(background.....)
     //g.drawImage(logo......)
-    var counter = 0
+    g.setColor(Color.white)
     for ( item <- choices ) {
-      if (counter == curChoice) {
-        g.setColor(new Color(255, 0, 0))
-      }
-
-      BewitchedBlade.drawCentred(item, 200+counter*30,g)
-      counter += 1
-
-      g.setColor(Color.white)
+      // BewitchedBlade.drawCentred(item, 200+counter*30,g)
+      item.render(g)
     }
   }
 
   def init(gc: GameContainer, game: StateBasedGame) = {
-    
+    input = gc.getInput
   }
 
   def getID() = Mode.MenuID
