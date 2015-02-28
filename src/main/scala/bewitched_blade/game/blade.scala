@@ -77,7 +77,7 @@ class Blade (xc : Float, yc : Float) {
 
         i.setCenterOfRotation(10,10)
         i.setRotation(ang)
-        g.drawImage(i, x-20, y-20)
+        g.drawImage(i, x-10, y-10)
     }
 
     // def topLeftCoord() = (x-width/2, y-height/2)
