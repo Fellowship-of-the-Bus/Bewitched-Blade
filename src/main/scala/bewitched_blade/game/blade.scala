@@ -1,7 +1,8 @@
 package com.github.fellowship_of_the_bus.bewitched_blade.game
 import scala.math.{atan2, toDegrees, sqrt}
+import org.newdawn.slick.{Graphics, Image}
 
-class GameObject (xc : Float, yc : Float) {
+class Blade (xc : Float, yc : Float) {
     var x: Float = xc
     var y: Float = yc
     var ang: Float = 0
@@ -37,6 +38,11 @@ class GameObject (xc : Float, yc : Float) {
     	yVel += yAcc.asInstanceOf[Float]
     	x += xVel
     	y += yVel
+    }
+
+    def draw(g: Graphics, i: Image) {
+        i.setRotation(ang)
+        i.draw(x, y)
     }
 
     // def topLeftCoord() = (x-width/2, y-height/2)
