@@ -9,7 +9,7 @@ class Blade (xc : Float, yc : Float) {
     var xVel: Float = 0
     var yVel: Float = 0
     var angVel :Float = 0
-    // def id: Int
+    def id = 1
 
     val hiltLen = 20
     val hiltWidth = 20
