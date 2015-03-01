@@ -57,6 +57,7 @@ class Blade (xc : Float, yc : Float) {
     	var yAcc = yVec / norm * accel
     	xVel += xAcc.asInstanceOf[Float]
     	yVel += yAcc.asInstanceOf[Float]
+      yVel += 0.40f
       
       if (xVec * xVel > 0 && abs(xVel) > abs(xVec)) {
         x += xVec
@@ -70,10 +71,14 @@ class Blade (xc : Float, yc : Float) {
       } else {
         y += yVel
       }
+      if (y >590 ) {
+        y = 590
+        yVel = 0
       }
       xVel = xVel * 0.9f
       yVel = yVel * 0.9f
       angVel = angVel * 0.9f
+      }
     }
 
     def draw(g: Graphics, i: Image) {
