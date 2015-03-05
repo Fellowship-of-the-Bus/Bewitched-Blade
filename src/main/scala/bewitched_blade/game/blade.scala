@@ -18,7 +18,7 @@ class Blade (xc : Float, yc : Float) {
     val accel = 1f
     val angAccel = 1f // 60 per sec
 
-    def move(mx : Float, my : Float) = {
+    /*def move(mx : Float, my : Float) = {
     	var xVec = mx - x
     	var yVec = my - y
     	var mTheta = atan2(yVec, xVec)
@@ -78,6 +78,59 @@ class Blade (xc : Float, yc : Float) {
       xVel = xVel * 0.9f
       yVel = yVel * 0.9f
       angVel = angVel * 0.9f
+      }
+    }*/
+
+    def move(mx : Float, my : Float) = {
+   	  var xVec = mx - x
+      var yVec = my - y
+      var mTheta = atan2(yVec, xVec)
+      mTheta = toDegrees(mTheta)
+
+      var dTheta = ((mTheta - ang) + 360) % 360
+      if (dTheta < 180) {
+    	angVel = 10
+    	while (angVel > dTheta) {
+    		angVel -= 1
+    	}
+      } else {
+    	angVel = -10
+    	while (angVel < dTheta - 360) {
+    		angVel += 1
+    	}
+      }
+
+      ang =  (ang + angVel) % 360
+
+      var norm = sqrt((xVec * xVec) + (yVec * yVec)) 
+      if (norm < 0.01) {
+          norm = 0.1
+      }
+      if (norm < 70) {
+         xVel = 0
+         yVel = 0
+      } else {
+    	var xAcc = xVec / norm * accel
+    	var yAcc = yVec / norm * accel + 0.1f
+    	if (xAcc * xVel < 0) { xVel = 0 }
+
+    	if (yAcc * yVel < 0) { yVel = 0 }
+    	xVel += xAcc.asInstanceOf[Float]
+    	if (abs(xVel) > abs(xVec)) {
+    		xVel = xVec + 1
+    	}
+    	yVel += yAcc.asInstanceOf[Float]
+    	if (abs(yVel) > abs(yVec)) {
+    		yVel = yVec + 1
+    	}
+
+    	x += xVel
+    	y += yVel
+      
+        if (y >590 ) {
+          y = 590
+          yVel = 0
+        }
       }
     }
 
