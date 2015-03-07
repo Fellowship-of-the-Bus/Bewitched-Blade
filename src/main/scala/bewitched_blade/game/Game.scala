@@ -8,12 +8,15 @@ import BewitchedBlade.{Height,Width}
 
 class Game {
   val blade = new Blade(300,400)
+  var towerHeight = 400
 
   var enemies: List[Enemy] = List()
+  var enemyProjectiles: List[Projectile] = List()
 
   /** removes inactive game objects */
   def cleanup() = {
     enemies = enemies.filter(_.active)
+    enemyProjectiles = enemyProjectiles.filter(_.active)
   }
 
   var counter = 0
@@ -25,6 +28,20 @@ class Game {
 
     for (e <- enemies; if (e.active)) {
       e.move()
+      e match {
+        case sh: Shooter =>
+          val shot = sh.shoot
+          shot match {
+            case Some(s) => enemyProjectiles = s::enemyProjectiles
+            case _ => ()
+          }
+          sh.tick()
+        case _ => ()
+      }
+    }
+
+    for (p <- enemyProjectiles; if (p.active)) {
+       p.move()
     }
 
     counter = counter + 1
@@ -41,7 +58,8 @@ class Game {
       var eTypeFrame = 1
       while (curEP > 0) {
         // val e = Enemy(math.min(rand(eTypeFrame)+ EnemyStart + startMod, EnemyEnd - 1))
-        val e = Enemy(KnightID)
+        //val e = Enemy(KnightID)
+        val e = Enemy(ArcherID)
         curEP -= e.difficulty
         enemies = e :: enemies
       }

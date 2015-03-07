@@ -4,14 +4,18 @@ import BewitchedBlade._
 
 object IDMap{
   val bladeID = 1
+  val ArrowID = 2
 
   val KnightID = 10
+  val ArcherID = 11
 
   val CausewayID = 100
 
   val imageMap = Map(
     bladeID -> "img/blade.png",
+    ArrowID -> "img/blade.png", // temporary
     KnightID -> "img/Knight.png",
+    ArcherID -> "img/blade.png", // temporary
     CausewayID -> "img/Causeway.png"
   )
 

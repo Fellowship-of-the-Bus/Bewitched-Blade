@@ -7,6 +7,7 @@ object Enemy {
   def apply (eid: Int) = {
     eid match {
       case KnightID => new Knight(Width, 450-20)
+      case ArcherID => new Archer(Width, 450-20)
     }
   }
 }
@@ -17,6 +18,11 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   protected var xVel = base.xVel
   protected var yVel = base.yVel
   val difficulty = base.difficulty
+  def numShot = base.numShot
+  def shotDelay = base.shotDelay
+  def shotType = base.shotType
+  def shotInterval = base.shotInterval
+  def shotVel = base.shotVel
 
   def width = 30
   def height = 40
@@ -28,6 +34,12 @@ trait EnemyType {
   def maxHp: Float
   val xVel: Float = 1
   val yVel: Float = 0
+
+  def shotType: Int = ArrowID
+  def shotInterval: Int = 60
+  def numShot = 1
+  def shotDelay = 0
+  def shotVel = 5.0f
 }
 
 trait Shield {
@@ -36,23 +48,6 @@ trait Shield {
   def size: Float
 }
 
-// trait Shooter {
-//   def x: Float
-
-//   def shotInterval: Int
-//   def initVel: Float
-//   def dmg: Float
-//   var shotTimer = 0
-
-//   def shoot(height: Float) = {
-//     if (shotTimer == 0) {
-//       shotTimer = shotInterval
-//       Some(Projectile(shotType, px, py));
-//     } else {
-//       None
-//     }
-//   }
-// }
 
 object Knight extends EnemyType {
   val id = KnightID
@@ -62,5 +57,23 @@ object Knight extends EnemyType {
 
 class Knight(x: Float, y: Float) extends Enemy(Knight, x, y) {
 
+}
+
+object Archer extends EnemyType {
+  val id = ArcherID
+  val maxHp = 1.0f
+  val difficulty = 2
+
+  override val shotInterval = 60* 5
+  override val shotType = ArrowID
+}
+
+class Archer(xc: Float, yc:Float) extends Enemy(Archer,xc,yc) with Shooter{
+  override def move() = {
+    if (x > 600) {
+      x = x - xVel
+    }
+    y = y + yVel
+  }
 }
 

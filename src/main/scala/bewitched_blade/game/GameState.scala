@@ -30,6 +30,10 @@ class GameState extends BasicGameState {
     drawAll(gameState.enemies)
 
     gameState.blade.draw(g, IDMap.images(gameState.blade.id))
+    
+    for (p <- gameState.enemyProjectiles) {
+      p.draw(g)
+    }
 
 //    var i: Image = IDMap.images(gameState.blade.id)
 //    for (j <- 0 to 10) {
