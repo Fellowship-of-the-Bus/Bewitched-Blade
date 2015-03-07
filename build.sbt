@@ -3,6 +3,11 @@ fork := true
 resolvers += 
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
+resolvers += Resolver.url(
+  "sbt-plugin-releases",
+  new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/")
+)(Resolver.ivyStylePatterns)
+
 // need scalatest also as a build dependency: the build implements a custom reporter
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1"
 
