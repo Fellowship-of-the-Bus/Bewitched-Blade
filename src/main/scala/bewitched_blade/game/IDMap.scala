@@ -11,12 +11,17 @@ object IDMap{
 
   val CausewayID = 100
 
+  val FotBLogoID = 1000
+
   val imageMap = Map(
     bladeID -> "img/blade.png",
     ArrowID -> "img/blade.png", // temporary
     KnightID -> "img/Knight.png",
+    
     ArcherID -> "img/blade.png", // temporary
-    CausewayID -> "img/Causeway.png"
+    CausewayID -> "img/Causeway.png",
+
+    FotBLogoID -> "img/FotB-Logo.png"
   )
 
   lazy val images = imageMap.map { x =>

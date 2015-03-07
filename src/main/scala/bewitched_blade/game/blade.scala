@@ -28,7 +28,7 @@ class Blade (xc : Float, yc : Float) {
       if (dTheta < 180) {
     	angVel = min(10.0f, floor(dTheta).asInstanceOf[Float])
       } else {
-    	angVel = max(-10.0f, ceil(dTheta).asInstanceOf[Float])
+    	angVel = max(-10.0f, ceil(dTheta - 360).asInstanceOf[Float])
       }
 
       ang =  (ang + angVel) % 360
