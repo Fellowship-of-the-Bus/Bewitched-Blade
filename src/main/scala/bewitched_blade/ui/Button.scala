@@ -4,14 +4,15 @@ package ui
 import org.newdawn.slick.{Graphics, Color, Input}
 import org.newdawn.slick.util.InputAdapter
 import org.newdawn.slick.gui.MouseOverArea
+import org.newdawn.slick.state.{StateBasedGame}
 import BewitchedBlade.drawCentred
 
 object Button {
   val width = 150
   val height = 20
 
-  def apply(text: String, x: Float, y: Float, action: ()=>Unit)(implicit input: Input) = {
-    val b = new Button(text, x, y, width, height, action)
+  def apply(text: String, x: Float, y: Float, action: ()=>Unit)(implicit input: Input, state: Int, game: StateBasedGame) = {
+    val b = new Button(text, x, y, width, height, () => if (game.getCurrentStateID == state) action())
     b.setInput(input)
     b
   }
@@ -64,9 +65,16 @@ class Button(text: String, x: Float, y: Float, width: Float, height: Float, acti
   // def mouseWheelMoved(change: Int): Unit = ???
 
   def render(g: Graphics) = {
-    g.setColor(Color.white)
+    var textColor = Color.red
+    var bgColor = Color.white
+
+    if (mode == MOUSE_OVER){
+      bgColor = Color.lightGray
+    }
+
+    g.setColor(bgColor)
     g.fillRoundRect(x, y, width, height, 5)
-    g.setColor(Color.red)
+    g.setColor(textColor)
     drawCentred(text, y, g)
   }
 }

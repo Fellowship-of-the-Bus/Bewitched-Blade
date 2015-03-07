@@ -14,6 +14,7 @@ class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {
     gc.setShowFPS(true)
     addState(Menu)
     addState(BewitchedBlade.game)
+    addState(Options)
   }
 }
 
