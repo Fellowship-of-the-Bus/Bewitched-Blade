@@ -5,9 +5,14 @@ import BewitchedBlade._
 object IDMap{
   val bladeID = 1
 
-  val imageMap = Map(
-    bladeID -> "img/blade.png"
+  val KnightID = 10
 
+  val CausewayID = 100
+
+  val imageMap = Map(
+    bladeID -> "img/blade.png",
+    KnightID -> "img/Knight.png",
+    CausewayID -> "img/Causeway.png"
   )
 
   lazy val images = imageMap.map { x =>
@@ -18,6 +23,5 @@ object IDMap{
     }
 
     id -> temp
-
   }
 }

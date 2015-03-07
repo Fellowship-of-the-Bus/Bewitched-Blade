@@ -4,6 +4,7 @@ import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickExcept
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
 import BewitchedBlade.{Height,Width}
+import IDMap._
 
 class GameState extends BasicGameState {
   var gameState = new Game
@@ -16,7 +17,20 @@ class GameState extends BasicGameState {
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
+    g.drawImage(images(CausewayID), 0, 450)
+
+    def drawAll(objs: List[Enemy]*): Unit =
+      for {
+        xs <- objs
+        o <- xs
+        if (o.active)
+        (x,y) = o.topLeftCoord
+      } g.drawImage(images(o.id), x, y)
+
+    drawAll(gameState.enemies)
+
     gameState.blade.draw(g, IDMap.images(gameState.blade.id))
+
 //    var i: Image = IDMap.images(gameState.blade.id)
 //    for (j <- 0 to 10) {
 //      i.setCenterOfRotation(10,10)
