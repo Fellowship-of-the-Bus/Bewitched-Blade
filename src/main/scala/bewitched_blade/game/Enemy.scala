@@ -1,4 +1,5 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus
+package bewitched_blade
 package game
 import IDMap._
 import BewitchedBlade.{Width}
@@ -69,8 +70,13 @@ object Archer extends EnemyType {
 }
 
 class Archer(xc: Float, yc:Float) extends Enemy(Archer,xc,yc) with Shooter{
+  //import scala.util.Random
+  //private val random = new Random
+  //def rand(i:Int) = random.nextInt(i)
+  import lib.util.rand
+  val stopDist = 550 + rand(100)
   override def move() = {
-    if (x > 600) {
+    if (x > stopDist) {
       x = x - xVel
     }
     y = y + yVel

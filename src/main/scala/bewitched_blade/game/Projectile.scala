@@ -2,7 +2,7 @@ package com.github.fellowship_of_the_bus.bewitched_blade
 package game
 import org.newdawn.slick.{Graphics, Image}
 import IDMap._
-import BewitchedBlade.{Width}
+import BewitchedBlade.{Width,Height}
 
 trait ProjectileType {
   def id: Int
@@ -35,6 +35,12 @@ abstract class Projectile(base: ProjectileType, xc: Float, yc: Float, xv: Float,
     ang = math.toDegrees(math.atan2(yv, xv)).asInstanceOf[Float]
     x = x + xVel
     y = y + yVel
+    if (x < -width || x > Width+width) {
+      inactivate
+    }
+    if (y < -height || y > Height+height) {
+      inactivate
+    }
   }
 
   def draw(g: Graphics) {

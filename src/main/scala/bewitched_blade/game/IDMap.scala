@@ -15,10 +15,10 @@ object IDMap{
 
   val imageMap = Map(
     bladeID -> "img/Blade.png",
-    ArrowID -> "img/Arrow.png", // temporary
+    ArrowID -> "img/Arrow.png", 
     KnightID -> "img/Knight.png",
     
-    ArcherID -> "img/Archer.png", // temporary
+    ArcherID -> "img/Archer.png", 
     CausewayID -> "img/Causeway.png",
 
     FotBLogoID -> "img/FotB-Logo.png"

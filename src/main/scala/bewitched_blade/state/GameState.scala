@@ -34,7 +34,7 @@ class GameState extends BasicGameState {
 
     gameState.blade.draw(g, IDMap.images(gameState.blade.id))
     
-    for (p <- gameState.enemyProjectiles) {
+    for (p <- gameState.enemyProjectiles; if (p.active)) {
       p.draw(g)
     }
 
