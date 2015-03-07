@@ -13,7 +13,7 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1"
 
 libraryDependencies += "junit" % "junit" % "4.10" % "test"
 
-libraryDependencies += "com.github.fellowship_of_the_bus" %% "fellowship-of-the-bus-lib" % "0.1-SNAPSHOT"
+libraryDependencies += "com.github.fellowship_of_the_bus" %% "fellowship-of-the-bus-lib" % "latest.integration"
 
 scalacOptions ++= Seq("-deprecation", "-feature", "-optimize", "-Yinline-warnings")
 
