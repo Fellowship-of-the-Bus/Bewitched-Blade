@@ -11,25 +11,15 @@ object Enemy {
   }
 }
 
-abstract class Enemy (base: EnemyType, xc: Float, yc: Float) {
+abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(xc, yc) {
   var hp = base.maxHp
   val id = base.id
-  private val xVel = base.xVel
-  private val yVel = base.yVel
+  protected var xVel = base.xVel
+  protected var yVel = base.yVel
   val difficulty = base.difficulty
-  var x = xc
-  var y = yc
 
-  private var isActive = true
-  def active = isActive
-  def inactivate = isActive = false
-
-  def move() = {
-    x -= xVel
-    y += yVel
-  }
-
-  def topLeftCoord = (x-15, y-20)
+  def width = 30
+  def height = 40
 }
 
 trait EnemyType {
