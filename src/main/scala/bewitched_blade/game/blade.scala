@@ -15,71 +15,8 @@ class Blade (xc : Float, yc : Float) {
     val hiltWidth = 20
     val bladeLen = 60
     val bladeWidth = 20
-    val accel = 1f
+    val accel = 0.75f
     val angAccel = 1f // 60 per sec
-
-    /*def move(mx : Float, my : Float) = {
-    	var xVec = mx - x
-    	var yVec = my - y
-    	var mTheta = atan2(yVec, xVec)
-    	mTheta = toDegrees(mTheta)
-
-    	var dTheta = ((mTheta - ang) + 360) % 360
-    	if (dTheta < 180) {
-    		angVel += angAccel
-        if (angVel > 359) {
-          angVel = 359
-        }
-    	} else {
-    		angVel -= angAccel
-        if (angVel < -359) {
-          angVel = -359
-        }
-    	}
-
-      if (abs(angVel) >  abs(dTheta) && angVel*dTheta > 0) {
-      ang = mTheta.asInstanceOf[Float]
-        angVel = 0
-      } else {
-        ang =  (ang + angVel) % 360
-      }
-//      ang = mTheta.asInstanceOf[Float]
-      var norm = sqrt((xVec * xVec) + (yVec * yVec)) 
-      if (norm < 0.01) {
-          norm = 0.1
-      }
-      if (abs(dTheta) < 20 && norm < 70 || norm < 50) {
-         angVel = 0
-         xVel = 0
-         yVel = 0
-      } else {
-    	var xAcc = xVec / norm * accel
-    	var yAcc = yVec / norm * accel
-    	xVel += xAcc.asInstanceOf[Float]
-    	yVel += yAcc.asInstanceOf[Float]
-      yVel += 0.40f
-      
-      if (xVec * xVel > 0 && abs(xVel) > abs(xVec)) {
-        x += xVec
-        xVel = xVel * 0.2f
-      } else {
-        x += xVel
-      }
-      if (yVec * yVel > 0 && abs(yVel) > abs(yVec)) {
-        y += yVec
-        yVel = yVel * 0.2f
-      } else {
-        y += yVel
-      }
-      if (y >590 ) {
-        y = 590
-        yVel = 0
-      }
-      xVel = xVel * 0.9f
-      yVel = yVel * 0.9f
-      angVel = angVel * 0.9f
-      }
-    }*/
 
     def move(mx : Float, my : Float) = {
    	  var xVec = mx - x
@@ -111,10 +48,10 @@ class Blade (xc : Float, yc : Float) {
          yVel = 0
       } else {
     	var xAcc = xVec / norm * accel
-    	var yAcc = yVec / norm * accel + 0.1f
-    	if (xAcc * xVel < 0) { xVel = 0 }
+    	var yAcc = yVec / norm * accel
+    	if (xAcc * xVel < 0) { xAcc *= 2 }
 
-    	if (yAcc * yVel < 0) { yVel = 0 }
+    	if (yAcc * yVel < 0) { yAcc *= 2 }
     	xVel += xAcc.asInstanceOf[Float]
     	if (abs(xVel) > abs(xVec)) {
     		xVel = xVec + 1
