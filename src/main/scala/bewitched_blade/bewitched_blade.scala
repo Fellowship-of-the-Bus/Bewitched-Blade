@@ -1,4 +1,5 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus
+package bewitched_blade
 import java.util.logging.{Level, Logger}
 import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
@@ -6,10 +7,9 @@ import BewitchedBlade.{Height,Width}
 
 import menu.Menu
 import game._
-class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {
- // import gameObject._
- // import Mode._
-    
+import lib.util.Native
+
+class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {    
   def initStatesList(gc: GameContainer) = {
     gc.setShowFPS(true)
     addState(Menu)
@@ -28,14 +28,16 @@ object BewitchedBlade extends App {
   val game = new GameState
 
   try {
-    println("Library path is: " + System.getProperty("java.library.path"))
-    val appgc = new AppGameContainer(new BewitchedBlade("Simple Slick Game"))
+    Native.loadLibraryFromJar()
+    val appgc = new AppGameContainer(new BewitchedBlade("Bewitched Blade"))
     appgc.setDisplayMode(Width, Height, false)
     appgc.setTargetFrameRate(FrameRate)
     appgc.setVSync(true)
     appgc.start()
   } catch {
     case ex: SlickException => Logger.getLogger(BewitchedBlade.getClass.getName()).log(Level.SEVERE, null, ex)
-    case _: Throwable => println("Library path is: " + System.getProperty("java.library.path"))
+    case t: Throwable => 
+      println("Library path is: " + System.getProperty("java.library.path"))
+      t.printStackTrace
   }
 }
