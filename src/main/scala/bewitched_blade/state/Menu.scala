@@ -1,5 +1,5 @@
 package com.github.fellowship_of_the_bus.bewitched_blade
-package menu
+package state
 
 import ui.Button
 import BewitchedBlade.{Width, Height}
