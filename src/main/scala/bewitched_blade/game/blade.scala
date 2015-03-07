@@ -1,5 +1,5 @@
 package com.github.fellowship_of_the_bus.bewitched_blade.game
-import scala.math.{atan2, toDegrees, sqrt, abs}
+import scala.math.{atan2, toDegrees, sqrt, abs, min, floor,ceil, max}
 import org.newdawn.slick.{Graphics, Image}
 
 class Blade (xc : Float, yc : Float) {
@@ -26,15 +26,9 @@ class Blade (xc : Float, yc : Float) {
 
       var dTheta = ((mTheta - ang) + 360) % 360
       if (dTheta < 180) {
-    	angVel = 10
-    	while (angVel > dTheta) {
-    		angVel -= 1
-    	}
+    	angVel = min(10.0f, floor(dTheta).asInstanceOf[Float])
       } else {
-    	angVel = -10
-    	while (angVel < dTheta - 360) {
-    		angVel += 1
-    	}
+    	angVel = max(-10.0f, ceil(dTheta).asInstanceOf[Float])
       }
 
       ang =  (ang + angVel) % 360
