@@ -2,13 +2,13 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade
 package game
 import IDMap._
-import BewitchedBlade.{Width}
+import BewitchedBlade.{Width, Ground}
 
 object Enemy {
   def apply (eid: Int) = {
     eid match {
-      case KnightID => new Knight(Width, 450-20)
-      case ArcherID => new Archer(Width, 450-20)
+      case KnightID => new Knight(Width, Ground-20)
+      case ArcherID => new Archer(Width, Ground-20)
     }
   }
 }
@@ -24,6 +24,8 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   def shotType = base.shotType
   def shotInterval = base.shotInterval
   def shotVel = base.shotVel
+  def groundAcc = base.groundAcc
+  def airAcc = base.airAcc
 
   def width = 30
   def height = 40
@@ -41,6 +43,8 @@ trait EnemyType {
   def numShot = 1
   def shotDelay = 0
   def shotVel = 5.0f
+  def groundAcc = 80
+  def airAcc = 50
 }
 
 trait Shield {
@@ -65,21 +69,26 @@ object Archer extends EnemyType {
   val maxHp = 1.0f
   val difficulty = 2
 
-  override val shotInterval = 60* 5
+  override val shotInterval = 59 * 5
   override val shotType = ArrowID
+  override val groundAcc = 75
+  override val airAcc = 45
 }
 
 class Archer(xc: Float, yc:Float) extends Enemy(Archer,xc,yc) with Shooter{
-  //import scala.util.Random
-  //private val random = new Random
-  //def rand(i:Int) = random.nextInt(i)
   import lib.util.rand
   val stopDist = 550 + rand(100)
   override def move() = {
     if (x > stopDist) {
       x = x - xVel
     }
-    y = y + yVel
+    if (y + yVel > Ground - 20) {
+      yVel = 0
+      y = Ground - 20
+    } else {
+      yVel = yVel + 0.4f
+      y = y + yVel
+    }
   }
 }
 

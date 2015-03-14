@@ -26,6 +26,7 @@ object BewitchedBlade extends App {
   val Width = 800
   val Height = 600
   val FrameRate = 60
+  val Ground = 450
   val game = new GameState
 
   try {
