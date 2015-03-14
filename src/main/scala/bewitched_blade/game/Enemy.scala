@@ -3,6 +3,7 @@ package bewitched_blade
 package game
 import IDMap._
 import BewitchedBlade.{Width, Ground}
+import lib.util.rand
 
 object Enemy {
   def apply (eid: Int) = {
@@ -28,15 +29,31 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   def groundAcc = base.groundAcc
   def airAcc = base.airAcc
   def arcs = base.arcs
+  var stopDist = base.stopDist
 
   def width = 30
   def height = 40
+  var stopped = false
 
   val img = images(id).copy
   def update(delta: Long) = img.update(delta)
   def draw() = {
     val (x, y) = topLeftCoord
     img.draw(x, y)
+  }
+  override def move() = {
+    if (x > stopDist) {
+      x = x - xVel
+    } else {
+      stopped = true
+    }
+    if (y + yVel > Ground - 20) {
+      yVel = 0
+      y = Ground - 20
+    } else {
+      yVel = yVel + 0.4f
+      y = y + yVel
+    }
   }
 }
 
@@ -55,6 +72,7 @@ trait EnemyType {
   def groundAcc = 80
   def airAcc = 50
   def arcs = false
+  var stopDist = 100
 }
 
 trait Shield {
@@ -86,20 +104,7 @@ object Archer extends EnemyType {
 }
 
 class Archer(xc: Float, yc:Float) extends Enemy(Archer,xc,yc) with Shooter{
-  import lib.util.rand
-  val stopDist = 550 + rand(100)
-  override def move() = {
-    if (x > stopDist) {
-      x = x - xVel
-    }
-    if (y + yVel > Ground - 20) {
-      yVel = 0
-      y = Ground - 20
-    } else {
-      yVel = yVel + 0.4f
-      y = y + yVel
-    }
-  }
+  stopDist = 550 + rand(100)
 }
 
 object Catapult extends EnemyType {
@@ -114,12 +119,5 @@ object Catapult extends EnemyType {
   override val shotVel = 10.0f
 }
 class Catapult(xc: Float, yc: Float) extends Enemy(Catapult, xc, yc) with Shooter {
-  import lib.util.rand
-  val stopDist = 650 + rand(50)
-  override def move() = {
-    if (x > stopDist) {
-      x = x - xVel
-    }
-    y + yVel
-  }
+  stopDist = 650 + rand(50)
 }
