@@ -139,8 +139,8 @@ class Blade (xc : Float, yc : Float) {
 
     def collision(e: Enemy) {
     	val eSize = max(e.width, e.height)
-    	var xVec = e.x - x
-      	var yVec = e.y - y
+    	var xVec: Double = e.x - x
+      	var yVec: Double = e.y - y
       	var norm = sqrt((xVec * xVec) + (yVec * yVec))
       	if (norm - eSize < 70) {
       		val ex1 = e.x-e.width/2
@@ -149,24 +149,24 @@ class Blade (xc : Float, yc : Float) {
       		val ey2 = e.y+e.height/2
 
       		var collide = false
-      		// var resist: Double
+      		var resist: Double = 0
       		if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey1)) {
-      			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex1))
+      			resist = e.hit(100, atan2(e.y - ey1, e.x - ex1).asInstanceOf[Float])
       			xVec = ex1 - x
       			yVec = ey1 - y
       			collide = true
       		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey2)) {
-      			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex1))
+      			resist = e.hit(100, atan2(e.y - ey2, e.x - ex1).asInstanceOf[Float])
       			xVec = ex1 - x
       			yVec = ey2 - y
       			collide = true
       		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey1)) {
-      			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex2))
+      			resist = e.hit(100, atan2(e.y - ey1, e.x - ex2).asInstanceOf[Float])
       			xVec = ex2 - x
       			yVec = ey1 - y
       			collide = true
       		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey2)) {
-      			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex2))
+      			resist = e.hit(100, atan2(e.y - ey2, e.x - ex2).asInstanceOf[Float])
       			xVec = ex2 - x
       			yVec = ey2 - y
       			collide = true
@@ -176,28 +176,28 @@ class Blade (xc : Float, yc : Float) {
       			norm = sqrt((xVec * xVec) + (yVec * yVec))
       			var theta = toDegrees(atan2(yVec, xVec))
       			var dTheta = theta - ang
-      			// ang - floor(cos(theta) * norm * resist)
+      			ang - floor(cos(theta) * norm * resist)
       			xVec = xVec * sin(theta)
       			yVec = yVec * sin(theta)
       		}
 
       		if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by1)) {
-      			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y))
+      			resist = e.hit(100, nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y).asInstanceOf[Float])
       			xVec = bx1 - x
       			yVec = by1 - y
       			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by2)) {
-      			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by2, e.x, e.y))
+      			resist = e.hit(100, nearSideAng(ex1, ey1, ex2, ey2, bx1, by2, e.x, e.y).asInstanceOf[Float])
       			xVec = bx1 - x
       			yVec = by2 - y
       			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by1)) {
-      			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by1, e.x, e.y))
+      			resist = e.hit(100, nearSideAng(ex1, ey1, ex2, ey2, bx2, by1, e.x, e.y).asInstanceOf[Float])
       			xVec = bx2 - x
       			yVec = by1 - y
       			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by2)) {
-      			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y))
+      			resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y).asInstanceOf[Float])
       			xVec = bx2 - x
       			yVec = by2 - y
       			collide = true
@@ -205,8 +205,8 @@ class Blade (xc : Float, yc : Float) {
 
       		if (collide) {
       			norm = sqrt((xVec * xVec) + (yVec * yVec))
-      			// xVel -= resist * xVec / norm
-      			// yVec -= resist * yVec / norm
+      			xVel -= (resist * xVec / norm).asInstanceOf[Float]
+      			yVec -= (resist * yVec / norm).asInstanceOf[Float]
       		}
       	}
     }

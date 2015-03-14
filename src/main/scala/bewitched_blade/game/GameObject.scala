@@ -4,8 +4,8 @@ import IDMap._
 import BewitchedBlade.{Width}
 
 abstract class GameObject(xc: Float, yc: Float) {
-  protected var x = xc
-  protected var y = yc
+  var x = xc
+  var y = yc
 
   def id: Int
   protected def xVel: Float
