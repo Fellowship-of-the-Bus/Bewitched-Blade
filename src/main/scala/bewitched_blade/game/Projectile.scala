@@ -16,6 +16,7 @@ object Projectile {
   def apply(id: Int, x: Float, y: Float, xv: Float, yv: Float) = {
      id match {
        case ArrowID => new Arrow(x,y, xv, yv)
+       case RockID => new Rock(x,y,xv, yv)
      }
   }
 }
@@ -60,3 +61,12 @@ class Arrow (x: Float, y: Float, xv: Float, yv:Float) extends Projectile ( Arrow
 
 }
 
+object Rock extends ProjectileType {
+  def height = 10
+  def width = 10
+  def id = RockID
+}
+
+class Rock(x:Float, y:Float, xv:Float, yv:Float) extends Projectile(Rock,x,y,xv,yv) {
+
+}

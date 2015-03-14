@@ -1,4 +1,5 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus
+package bewitched_blade
 package game
 import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
@@ -59,7 +60,9 @@ class Game {
       while (curEP > 0) {
         // val e = Enemy(math.min(rand(eTypeFrame)+ EnemyStart + startMod, EnemyEnd - 1))
         //val e = Enemy(KnightID)
-        val e = Enemy(ArcherID)
+        //val e = Enemy(ArcherID)
+        import lib.util.rand
+        val e = Enemy(EnemyStart + rand(EnemyEnd - EnemyStart))
         curEP -= e.difficulty
         enemies = e :: enemies
       }

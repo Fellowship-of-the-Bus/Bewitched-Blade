@@ -9,6 +9,7 @@ object Enemy {
     eid match {
       case KnightID => new Knight(Width, Ground-20)
       case ArcherID => new Archer(Width, Ground-20)
+      case CatapultID => new Catapult(Width, Ground -20) 
     }
   }
 }
@@ -92,3 +93,22 @@ class Archer(xc: Float, yc:Float) extends Enemy(Archer,xc,yc) with Shooter{
   }
 }
 
+object Catapult extends EnemyType {
+  val id = CatapultID
+  val maxHp = 2.0f
+  val difficulty = 4
+  override val shotInterval = 59*8
+  override val shotType = RockID
+  override val groundAcc = 25
+  override val airAcc = 0
+}
+class Catapult(xc: Float, yc: Float) extends Enemy(Catapult, xc, yc) with Shooter {
+  import lib.util.rand
+  val stopDist = 650 + rand(50)
+  override def move() = {
+    if (x > stopDist) {
+      x = x - xVel
+    }
+    y + yVel
+  }
+}
