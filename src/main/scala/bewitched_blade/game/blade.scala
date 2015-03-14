@@ -1,5 +1,5 @@
 package com.github.fellowship_of_the_bus.bewitched_blade.game
-import scala.math.{atan2, toDegrees, sqrt, abs, min, floor,ceil, max}
+import scala.math.{atan2, toDegrees, sqrt, abs, min, floor,ceil, max, cos, sin}
 import org.newdawn.slick.{Graphics, Image}
 
 class Blade (xc : Float, yc : Float) {
@@ -17,6 +17,15 @@ class Blade (xc : Float, yc : Float) {
     val bladeWidth = 20
     val accel = 0.75f
     val angAccel = 1f // 60 per sec
+
+    private var bx1 = x + 70*cos(ang) - 10*sin(ang)
+    private var bx2 = x + 70*cos(ang) + 10*sin(ang)
+    private var bx3 = x + -10*cos(ang) - 10*sin(ang)
+    private var bx4 = x + -10*cos(ang) + 10* sin(ang)
+    private var by1 = y + 70*sin(ang) + 10*cos(ang)
+    private var by2 = y + 70*sin(ang) - 10*cos(ang)
+    private var by3 = y + -10*sin(ang) + 10*cos(ang)
+    private var by4 = y + -10*sin(ang) - 10*cos(ang)
 
     def move(mx : Float, my : Float) = {
    	  var xVec = mx - x
@@ -43,25 +52,35 @@ class Blade (xc : Float, yc : Float) {
       } else {
     	var xAcc = xVec / norm * accel
     	var yAcc = yVec / norm * accel
-    	if (xAcc * xVel < 0) { xAcc *= 2 }
+    	if (xAcc * xVel < 0) { xAcc *= 1.6 }
 
-    	if (yAcc * yVel < 0) { yAcc *= 2 }
+    	if (yAcc * yVel < 0) { yAcc *= 1.6 }
     	xVel += xAcc.asInstanceOf[Float]
-    	if (abs(xVel) > abs(xVec)) {
-    		xVel = xVec + 1
+    	if (abs(xVel) > abs(xVec) && xVel * xVec > 0) {
+    	 	xVel = xVec + 1
     	}
     	yVel += yAcc.asInstanceOf[Float]
-    	if (abs(yVel) > abs(yVec)) {
+    	if (abs(yVel) > abs(yVec) && yVel * yVec > 0) {
     		yVel = yVec + 1
     	}
 
     	x += xVel
     	y += yVel
       
-        if (y >590 ) {
-          y = 590
-          yVel = 0
-        }
+        // if (y >590 ) {
+        //   y = 590
+        // }
+
+        val cAng = cos(ang)
+        val sAng = sin(ang)
+        bx1 = x + 70*cAng - 10*sAng
+	    bx2 = x + 70*cAng + 10*sAng
+	    bx3 = x + -10*cAng - 10*sAng
+	    bx4 = x + -10*cAng + 10*sAng
+	    by1 = y + 70*sAng + 10*cAng
+	    by2 = y + 70*sAng - 10*cAng
+	    by3 = y + -10*sAng + 10*cAng
+	    by4 = y + -10*sAng - 10*cAng
       }
     }
 
@@ -72,8 +91,79 @@ class Blade (xc : Float, yc : Float) {
         g.drawImage(i, x-10, y-10)
     }
 
-    // def topLeftCoord() = (x-width/2, y-height/2)
-    // def bottomRightCoord() = (x+width/2, y+height/2)
+
+    def slope(x1: Double, y1: Double, x2: Double, y2:Double) = {
+    	val xDiff = x1 - x2
+    	val yDiff = y1 - y2
+
+    	xDiff / yDiff
+    }
+
+    def side(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double) = {
+    	if(x1 == x2) {
+    		x1 - x3
+    	} else {
+    		((x3 - x1) * slope(x1, y1, x2, y2)) + (y1 - y3)
+    	}
+    }
+
+    def sameSide(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double) = {
+    	(side(x1, y1, x2, y2, x3, y3) * side(x1, y1, x2, y2, x4, y4)) >= 0
+    }
+
+    def inRect(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double, x5: Double, y5: Double) {
+    	sameSide(x1,y1,x2,y2,x3,y3,x5,y5) && sameSide(x2,y2,x3,y3,x4,y4,x5,y5) && sameSide(x3,y3,x4,y4,x1,y1,x5,y5) && sameSide(x4,y4,x1,y1,x2,y2,x5,y5)
+    }
+
+    def nearSideAng(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double) {
+    	if (abs(x1 - x3) < abs (x2 - x3)) {
+    		if (abs(y1 - y3) < abs (y2 - y3)) {
+    			atan2(y4 - y1, x4 - x1)
+    		} else {
+    			atan2(y4 - y2, x4 - x1)
+    		}
+    	} else {
+    		if (abs(y1 - y3) < abs (y2 - y3)) {
+    			atan2(y4 - y1, x4 - x2)
+    		} else {
+   				atan2(y4 - y2, x4 - x2) 			
+    		}
+    	}
+    }
+
+    // def collision(e: Enemy) {
+    // 	val eSize = max(e.width, e.height)
+    // 	val xVec = e.x - x
+    //   	val yVec = e.y - y
+    //   	val norm = sqrt((xVec * xVec) + (yVec * yVec))
+    //   	if (norm - eSize < 70) {
+    //   		val ex1 = e.x-e.width/2
+    //   		val ex2 = e.x+e.width/2
+    //   		val ey1 = e.y-e.height/2
+    //   		val ey2 = e.y+e.height/2
+
+    //   		var resist: Double
+    //   		if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey1)) {
+    //   			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex1))
+    //   		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey2)) {
+    //   			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex1))
+    //   		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey1)) {
+    //   			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex2))
+    //   		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey2)) {
+    //   			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex2))
+    //   		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by1)) {
+    //   			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y))
+    //   		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by2)) {
+    //   			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by2, e.x, e.y))
+    //   		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by1)) {
+    //   			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by1, e.x, e.y))
+    //   		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by2)) {
+    //   			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y))
+    //   		}
+    //   	}
+    // }
+
+
 
     // def collision(cand: GameObject) = if (active && cand.active) {
     //     val (x1, y1) = topLeftCoord
