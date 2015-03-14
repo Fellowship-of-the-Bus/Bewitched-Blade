@@ -28,6 +28,7 @@ class Game {
     blade.move(input.getMouseX,input.getMouseY)
 
     for (e <- enemies; if (e.active)) {
+      blade.collision(e)
       e.move()
       e.update(delta)
       e match {

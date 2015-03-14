@@ -2,7 +2,7 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade
 package game
 
-import scala.math.{atan2, toDegrees, sqrt, abs, min, floor,ceil, max, cos, sin}
+import scala.math._
 import org.newdawn.slick.{Graphics}
 import ui.Drawable
 
@@ -46,6 +46,16 @@ class Blade (xc : Float, yc : Float) {
       }
 
       ang =  (ang + angVel) % 360
+      val cAng = cos(toRadians(ang))
+	  val sAng = sin(toRadians(ang))
+	  bx1 = x + 70*cAng - 10*sAng
+	  bx2 = x + 70*cAng + 10*sAng
+	  bx3 = x + -10*cAng - 10*sAng
+	  bx4 = x + -10*cAng + 10*sAng
+	  by1 = y + 70*sAng + 10*cAng
+	  by2 = y + 70*sAng - 10*cAng
+	  by3 = y + -10*sAng + 10*cAng
+	  by4 = y + -10*sAng - 10*cAng
 
       var norm = sqrt((xVec * xVec) + (yVec * yVec)) 
       if (norm < 0.01) {
@@ -76,16 +86,7 @@ class Blade (xc : Float, yc : Float) {
         //   y = 590
         // }
 
-        val cAng = cos(ang)
-        val sAng = sin(ang)
-        bx1 = x + 70*cAng - 10*sAng
-	    bx2 = x + 70*cAng + 10*sAng
-	    bx3 = x + -10*cAng - 10*sAng
-	    bx4 = x + -10*cAng + 10*sAng
-	    by1 = y + 70*sAng + 10*cAng
-	    by2 = y + 70*sAng - 10*cAng
-	    by3 = y + -10*sAng + 10*cAng
-	    by4 = y + -10*sAng - 10*cAng
+        
       }
     }
 
@@ -94,6 +95,10 @@ class Blade (xc : Float, yc : Float) {
         i.setCenterOfRotation(10,10)
         i.setRotation(ang)
         i.draw(x-10, y-10)
+        g.fillOval(bx1.asInstanceOf[Float],by1.asInstanceOf[Float],10,10)
+        g.fillOval(bx2.asInstanceOf[Float],by2.asInstanceOf[Float],10,10)
+        g.fillOval(bx3.asInstanceOf[Float],by3.asInstanceOf[Float],10,10)
+        g.fillOval(bx4.asInstanceOf[Float],by4.asInstanceOf[Float],10,10)
         // g.drawImage(i, x-10, y-10)
     }
 
@@ -142,7 +147,7 @@ class Blade (xc : Float, yc : Float) {
     	var xVec: Double = e.x - x
       	var yVec: Double = e.y - y
       	var norm = sqrt((xVec * xVec) + (yVec * yVec))
-      	if (norm - eSize < 70) {
+      	//if (norm - eSize < 70) {
       		val ex1 = e.x-e.width/2
       		val ex2 = e.x+e.width/2
       		val ey1 = e.y-e.height/2
@@ -150,65 +155,65 @@ class Blade (xc : Float, yc : Float) {
 
       		var collide = false
       		var resist: Double = 0
-      		if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey1)) {
-      			resist = e.hit(100, atan2(e.y - ey1, e.x - ex1).asInstanceOf[Float])
-      			xVec = ex1 - x
-      			yVec = ey1 - y
-      			collide = true
-      		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey2)) {
-      			resist = e.hit(100, atan2(e.y - ey2, e.x - ex1).asInstanceOf[Float])
-      			xVec = ex1 - x
-      			yVec = ey2 - y
-      			collide = true
-      		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey1)) {
-      			resist = e.hit(100, atan2(e.y - ey1, e.x - ex2).asInstanceOf[Float])
-      			xVec = ex2 - x
-      			yVec = ey1 - y
-      			collide = true
-      		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey2)) {
-      			resist = e.hit(100, atan2(e.y - ey2, e.x - ex2).asInstanceOf[Float])
-      			xVec = ex2 - x
-      			yVec = ey2 - y
-      			collide = true
-      		} 
+      		// if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey1)) {
+      		// 	resist = e.hit(100, atan2(e.y - ey1, e.x - ex1).asInstanceOf[Float])
+      		// 	xVec = ex1 - x
+      		// 	yVec = ey1 - y
+      		// 	collide = true
+      		// } else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey2)) {
+      		// 	resist = e.hit(100, atan2(e.y - ey2, e.x - ex1).asInstanceOf[Float])
+      		// 	xVec = ex1 - x
+      		// 	yVec = ey2 - y
+      		// 	collide = true
+      		// } else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey1)) {
+      		// 	resist = e.hit(100, atan2(e.y - ey1, e.x - ex2).asInstanceOf[Float])
+      		// 	xVec = ex2 - x
+      		// 	yVec = ey1 - y
+      		// 	collide = true
+      		// } else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey2)) {
+      		// 	resist = e.hit(100, atan2(e.y - ey2, e.x - ex2).asInstanceOf[Float])
+      		// 	xVec = ex2 - x
+      		// 	yVec = ey2 - y
+      		// 	collide = true
+      		// } 
 
-      		if (collide) {
-      			norm = sqrt((xVec * xVec) + (yVec * yVec))
-      			var theta = toDegrees(atan2(yVec, xVec))
-      			var dTheta = theta - ang
-      			ang - floor(cos(theta) * norm * resist)
-      			xVec = xVec * sin(theta)
-      			yVec = yVec * sin(theta)
-      		}
+      		// if (collide) {
+      		// 	norm = sqrt((xVec * xVec) + (yVec * yVec))
+      		// 	var theta = toDegrees(atan2(yVec, xVec))
+      		// 	var dTheta = theta - ang
+      		// 	ang - floor(cos(theta) * norm * resist)
+      		// 	xVec = xVec * sin(theta)
+      		// 	yVec = yVec * sin(theta)
+      		// }
 
       		if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by1)) {
       			resist = e.hit(100, nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y).asInstanceOf[Float])
       			xVec = bx1 - x
       			yVec = by1 - y
       			collide = true
-      		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by2)) {
-      			resist = e.hit(100, nearSideAng(ex1, ey1, ex2, ey2, bx1, by2, e.x, e.y).asInstanceOf[Float])
-      			xVec = bx1 - x
-      			yVec = by2 - y
-      			collide = true
-      		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by1)) {
-      			resist = e.hit(100, nearSideAng(ex1, ey1, ex2, ey2, bx2, by1, e.x, e.y).asInstanceOf[Float])
-      			xVec = bx2 - x
-      			yVec = by1 - y
-      			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by2)) {
-      			resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y).asInstanceOf[Float])
+      			resist = e.hit(100, nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y).asInstanceOf[Float])
       			xVec = bx2 - x
       			yVec = by2 - y
+      			collide = true
+      		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx3,by3)) {
+      			resist = e.hit(100, nearSideAng(ex1, ey1, ex2, ey2, bx3, by3, e.x, e.y).asInstanceOf[Float])
+      			xVec = bx3 - x
+      			yVec = by3 - y
+      			collide = true
+      		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx4,by4)) {
+      			resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx4, by4, e.x, e.y).asInstanceOf[Float])
+      			xVec = bx4 - x
+      			yVec = by4 - y
       			collide = true
       		}
 
-      		if (collide) {
-      			norm = sqrt((xVec * xVec) + (yVec * yVec))
-      			xVel -= (resist * xVec / norm).asInstanceOf[Float]
-      			yVec -= (resist * yVec / norm).asInstanceOf[Float]
-      		}
-      	}
+      		// if (collide) {
+      		// 	norm = sqrt((xVec * xVec) + (yVec * yVec))
+      		// 	xVel -= (resist * xVec / norm).asInstanceOf[Float]
+      		// 	yVec -= (resist * yVec / norm).asInstanceOf[Float]
+      		// }
+      	//}
     }
 
 
