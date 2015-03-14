@@ -5,7 +5,7 @@ import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickExcept
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
 import IDMap._
-import BewitchedBlade.{Height,Width}
+import lib.game.GameConfig.{Height,Width}
 
 class Game {
   val blade = new Blade(300,400)

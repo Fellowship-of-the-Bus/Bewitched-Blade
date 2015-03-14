@@ -2,6 +2,7 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade
 package game
 import BewitchedBlade._
+import lib.game.GameConfig.{Width,Height}
 
 
 trait Shooter {
@@ -46,7 +47,7 @@ trait Shooter {
       var py: Float = y
 
       var xv: Float = 50 - x
-      var yv: Float = (BewitchedBlade.Height - BewitchedBlade.game.gameState.towerHeight - y)
+      var yv: Float = (Height - BewitchedBlade.game.gameState.towerHeight - y)
       if (arcs == true) {
         yv = yv - 750
       }

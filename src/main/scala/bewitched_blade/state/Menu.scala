@@ -2,9 +2,9 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade
 package state
 
-import ui.Button
+import lib.ui.Button
 import game.IDMap._
-import BewitchedBlade.{Width, Height}
+import lib.game.GameConfig.{Width,Height}
 
 import org.newdawn.slick.{GameContainer, Graphics, Color, Input, KeyListener}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
@@ -28,7 +28,6 @@ object Menu extends BasicGameState {
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
-    import BewitchedBlade.{Width, Height}
     //g.drawImage(background.....)
     val fotb = images(FotBLogoID)
     fotb.draw(Width/2-fotb.getWidth/2, 3*Height/4)

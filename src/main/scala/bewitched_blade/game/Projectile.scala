@@ -4,7 +4,7 @@ package game
 
 import org.newdawn.slick.{Graphics}
 import IDMap._
-import BewitchedBlade.{Width,Height}
+import lib.game.GameConfig.{Width,Height}
 import ui.{Image}
 
 trait ProjectileType {

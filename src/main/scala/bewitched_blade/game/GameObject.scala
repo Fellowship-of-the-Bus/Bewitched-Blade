@@ -1,7 +1,8 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus
+package bewitched_blade
 package game
 import IDMap._
-import BewitchedBlade.{Width}
+import lib.game.GameConfig.{Width}
 
 abstract class GameObject(xc: Float, yc: Float) {
   var x = xc

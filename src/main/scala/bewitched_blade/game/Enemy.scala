@@ -2,8 +2,9 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade
 package game
 import IDMap._
-import BewitchedBlade.{Width, Ground}
+import BewitchedBlade.Ground
 import lib.util.rand
+import lib.game.GameConfig.Width
 
 object Enemy {
   def apply (eid: Int) = {

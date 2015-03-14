@@ -4,10 +4,11 @@ package state
 import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
-import BewitchedBlade.{Height,Width,Ground}
+import BewitchedBlade.{Ground}
 import game._
 import game.IDMap._
 import ui.Image
+import lib.game.GameConfig.{Width,Height}
 
 class GameState extends BasicGameState {
   var gameState = new Game
