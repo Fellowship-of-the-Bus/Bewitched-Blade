@@ -27,6 +27,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   def shotVel = base.shotVel
   def groundAcc = base.groundAcc
   def airAcc = base.airAcc
+  def arcs = base.arcs
 
   def width = 30
   def height = 40
@@ -46,6 +47,7 @@ trait EnemyType {
   def shotVel = 5.0f
   def groundAcc = 80
   def airAcc = 50
+  def arcs = false
 }
 
 trait Shield {
@@ -101,6 +103,8 @@ object Catapult extends EnemyType {
   override val shotType = RockID
   override val groundAcc = 25
   override val airAcc = 0
+  override val arcs = true
+  override val shotVel = 10.0f
 }
 class Catapult(xc: Float, yc: Float) extends Enemy(Catapult, xc, yc) with Shooter {
   import lib.util.rand

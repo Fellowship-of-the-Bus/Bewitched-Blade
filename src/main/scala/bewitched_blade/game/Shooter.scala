@@ -13,6 +13,7 @@ trait Shooter {
   def shotVel: Float
   def groundAcc: Int
   def airAcc: Int
+  def arcs: Boolean
 
   def shotInterval: Int
   var shotTimer = 0
@@ -46,6 +47,9 @@ trait Shooter {
 
       var xv: Float = 50 - x
       var yv: Float = (BewitchedBlade.Height - BewitchedBlade.game.gameState.towerHeight - y)
+      if (arcs == true) {
+        yv = yv - 750
+      }
       if (y < Ground - 20) { //In the Air
         if (roll > airAcc) {
           xv = xv + 40 - rand(80)
@@ -54,7 +58,10 @@ trait Shooter {
       } else { //On the ground
         if (roll > groundAcc) {
           xv = xv + 40 - rand(80)
-          yv = yv + 75 - rand(150)
+          if (arcs == true) 
+            yv = yv + 250 - rand(500)
+          else 
+            yv = yv + 75 - rand(150)
         }
       }
       var norm = math.sqrt(xv*xv + yv*yv).asInstanceOf[Float]
