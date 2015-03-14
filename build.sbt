@@ -34,4 +34,4 @@ val separator = System.getProperty("os.name").split(" ")(0).toLowerCase match {
 }
 
 javaOptions += "-Djava.library.path=" + System.getProperty("java.library.path") + 
-  separator + "./src/main/resources/native/" + os
+  separator + "./src/main/resources/natives/" + os
