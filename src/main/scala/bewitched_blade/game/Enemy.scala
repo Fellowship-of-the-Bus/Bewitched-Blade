@@ -44,6 +44,10 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   }
   override def move() = {
     if (x > stopDist) {
+      xVel = xVel + xAcc
+      if (xVel >1 ) {
+        xVel = 1
+      }
       x = x - xVel
     } else {
       stop
