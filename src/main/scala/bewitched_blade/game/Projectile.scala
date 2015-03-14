@@ -1,8 +1,11 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus
+package bewitched_blade
 package game
-import org.newdawn.slick.{Graphics, Image}
+
+import org.newdawn.slick.{Graphics}
 import IDMap._
 import BewitchedBlade.{Width,Height}
+import ui.{Image}
 
 trait ProjectileType {
   def id: Int
@@ -45,10 +48,10 @@ abstract class Projectile(base: ProjectileType, xc: Float, yc: Float, xv: Float,
   }
 
   def draw(g: Graphics) {
-    val i: Image = IDMap.images(base.id)
+    val i = IDMap.images(base.id)
     i.setCenterOfRotation(10,10)
     i.setRotation(ang)
-    g.drawImage(i,math.floor(x-10).asInstanceOf[Int], math.floor(y-10).asInstanceOf[Int])
+    i.draw(math.floor(x-10).asInstanceOf[Int], math.floor(y-10).asInstanceOf[Int])
   }
 }
 

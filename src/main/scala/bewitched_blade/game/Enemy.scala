@@ -31,6 +31,13 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
 
   def width = 30
   def height = 40
+
+  val img = images(id).copy
+  def update(delta: Long) = img.update(delta)
+  def draw() = {
+    val (x, y) = topLeftCoord
+    img.draw(x, y)
+  }
 }
 
 trait EnemyType {

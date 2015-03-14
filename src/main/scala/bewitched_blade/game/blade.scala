@@ -1,6 +1,10 @@
-package com.github.fellowship_of_the_bus.bewitched_blade.game
+package com.github.fellowship_of_the_bus
+package bewitched_blade
+package game
+
 import scala.math.{atan2, toDegrees, sqrt, abs, min, floor,ceil, max}
-import org.newdawn.slick.{Graphics, Image}
+import org.newdawn.slick.{Graphics}
+import ui.Drawable
 
 class Blade (xc : Float, yc : Float) {
     var x: Float = xc
@@ -9,7 +13,7 @@ class Blade (xc : Float, yc : Float) {
     var xVel: Float = 0
     var yVel: Float = 0
     var angVel: Float = 0
-    def id = 1
+    def id = IDMap.bladeID
 
     val hiltLen = 20
     val hiltWidth = 20
@@ -65,11 +69,12 @@ class Blade (xc : Float, yc : Float) {
       }
     }
 
-    def draw(g: Graphics, i: Image) {
+    def draw(g: Graphics, i: Drawable) {
 
         i.setCenterOfRotation(10,10)
         i.setRotation(ang)
-        g.drawImage(i, x-10, y-10)
+        i.draw(x-10, y-10)
+        // g.drawImage(i, x-10, y-10)
     }
 
     // def topLeftCoord() = (x-width/2, y-height/2)

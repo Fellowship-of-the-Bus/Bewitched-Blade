@@ -1,11 +1,10 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus
 package ui
 
 import org.newdawn.slick.{Graphics, Color, Input}
 import org.newdawn.slick.util.InputAdapter
 import org.newdawn.slick.gui.MouseOverArea
 import org.newdawn.slick.state.{StateBasedGame}
-import BewitchedBlade.drawCentred
 
 object Button {
   val width = 150

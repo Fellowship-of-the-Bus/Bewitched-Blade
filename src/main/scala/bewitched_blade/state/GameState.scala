@@ -1,11 +1,13 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus
+package bewitched_blade
 package state
-import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input, Image}
+import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
 import BewitchedBlade.{Height,Width,Ground}
 import game._
 import game.IDMap._
+import ui.Image
 
 class GameState extends BasicGameState {
   var gameState = new Game
@@ -20,15 +22,14 @@ class GameState extends BasicGameState {
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
     val lightBlue = new Color(150,150,255,0)
     g.setBackground(lightBlue)
-    g.drawImage(images(CausewayID), 0, Ground)
+    images(CausewayID).draw(0, Ground)
 
     def drawAll(objs: List[Enemy]*): Unit =
       for {
         xs <- objs
         o <- xs
         if (o.active)
-        (x,y) = o.topLeftCoord
-      } g.drawImage(images(o.id), x, y)
+      } o.draw()
 
     drawAll(gameState.enemies)
 
