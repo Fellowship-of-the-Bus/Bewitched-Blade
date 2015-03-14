@@ -56,10 +56,11 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
     }
   }
   def stop() = {
-    
+    img.stop
   }
   def restart() = {
     stopDist = 0
+    img.start
   }
   def hit(pow: Float, hitAng: Float): Float = {
     val temp = (hitAng + 180) % 360
