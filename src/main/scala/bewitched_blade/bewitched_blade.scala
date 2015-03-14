@@ -20,12 +20,11 @@ class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {
 
 object BewitchedBlade extends App {
   def makeImg(loc: String) = new Image(loc)
-  def drawCentred(s: String, h: Float, g: Graphics) = {
-    g.drawString(s, Width/2 - s.length()*5, h)
-  }
+
   val Width = 800
   val Height = 600
   val FrameRate = 60
+  val Ground = 450
   val game = new GameState
 
   try {

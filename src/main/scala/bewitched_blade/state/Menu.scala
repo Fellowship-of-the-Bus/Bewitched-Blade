@@ -1,12 +1,14 @@
-package com.github.fellowship_of_the_bus.bewitched_blade
+package com.github.fellowship_of_the_bus
+package bewitched_blade
 package state
 
 import ui.Button
 import game.IDMap._
 import BewitchedBlade.{Width, Height}
 
-import org.newdawn.slick.{GameContainer, Graphics, Color, Input, Image, KeyListener}
+import org.newdawn.slick.{GameContainer, Graphics, Color, Input, KeyListener}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
+
 
 object Menu extends BasicGameState {
   val centerx = Width/2-Button.width/2
@@ -29,7 +31,7 @@ object Menu extends BasicGameState {
     import BewitchedBlade.{Width, Height}
     //g.drawImage(background.....)
     val fotb = images(FotBLogoID)
-    g.drawImage(fotb, Width/2-fotb.getWidth/2, 3*Height/4)
+    fotb.draw(Width/2-fotb.getWidth/2, 3*Height/4)
     for ( item <- choices ) {
       item.render(g)
     }

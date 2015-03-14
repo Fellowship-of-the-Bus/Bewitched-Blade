@@ -1,6 +1,11 @@
-package com.github.fellowship_of_the_bus.bewitched_blade.game
+package com.github.fellowship_of_the_bus
+package bewitched_blade
+package game
+
 import scala.math.{atan2, toDegrees, sqrt, abs, min, floor,ceil, max, cos, sin}
-import org.newdawn.slick.{Graphics, Image}
+import org.newdawn.slick.{Graphics}
+import ui.Drawable
+
 
 class Blade (xc : Float, yc : Float) {
     var x: Float = xc
@@ -9,7 +14,7 @@ class Blade (xc : Float, yc : Float) {
     var xVel: Float = 0
     var yVel: Float = 0
     var angVel: Float = 0
-    def id = 1
+    def id = IDMap.bladeID
 
     val hiltLen = 20
     val hiltWidth = 20
@@ -18,14 +23,14 @@ class Blade (xc : Float, yc : Float) {
     val accel = 0.75f
     val angAccel = 1f // 60 per sec
 
-    private var bx1 = x + 70*cos(ang) - 10*sin(ang)
-    private var bx2 = x + 70*cos(ang) + 10*sin(ang)
-    private var bx3 = x + -10*cos(ang) - 10*sin(ang)
-    private var bx4 = x + -10*cos(ang) + 10* sin(ang)
-    private var by1 = y + 70*sin(ang) + 10*cos(ang)
-    private var by2 = y + 70*sin(ang) - 10*cos(ang)
-    private var by3 = y + -10*sin(ang) + 10*cos(ang)
-    private var by4 = y + -10*sin(ang) - 10*cos(ang)
+    private var bx1 = x + 70.0
+    private var bx2 = x + 70.0
+    private var bx3 = x + -10.0
+    private var bx4 = x + -10.0
+    private var by1 = y + 10*cos(ang)
+    private var by2 = y + -10*cos(ang)
+    private var by3 = y + 10*cos(ang)
+    private var by4 = y + -10*cos(ang)
 
     def move(mx : Float, my : Float) = {
    	  var xVec = mx - x
@@ -84,11 +89,12 @@ class Blade (xc : Float, yc : Float) {
       }
     }
 
-    def draw(g: Graphics, i: Image) {
+    def draw(g: Graphics, i: Drawable) {
 
         i.setCenterOfRotation(10,10)
         i.setRotation(ang)
-        g.drawImage(i, x-10, y-10)
+        i.draw(x-10, y-10)
+        // g.drawImage(i, x-10, y-10)
     }
 
 
@@ -111,11 +117,11 @@ class Blade (xc : Float, yc : Float) {
     	(side(x1, y1, x2, y2, x3, y3) * side(x1, y1, x2, y2, x4, y4)) >= 0
     }
 
-    def inRect(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double, x5: Double, y5: Double) {
+    def inRect(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double, x5: Double, y5: Double) = {
     	sameSide(x1,y1,x2,y2,x3,y3,x5,y5) && sameSide(x2,y2,x3,y3,x4,y4,x5,y5) && sameSide(x3,y3,x4,y4,x1,y1,x5,y5) && sameSide(x4,y4,x1,y1,x2,y2,x5,y5)
     }
 
-    def nearSideAng(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double) {
+    def nearSideAng(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double) = {
     	if (abs(x1 - x3) < abs (x2 - x3)) {
     		if (abs(y1 - y3) < abs (y2 - y3)) {
     			atan2(y4 - y1, x4 - x1)
@@ -131,37 +137,79 @@ class Blade (xc : Float, yc : Float) {
     	}
     }
 
-    // def collision(e: Enemy) {
-    // 	val eSize = max(e.width, e.height)
-    // 	val xVec = e.x - x
-    //   	val yVec = e.y - y
-    //   	val norm = sqrt((xVec * xVec) + (yVec * yVec))
-    //   	if (norm - eSize < 70) {
-    //   		val ex1 = e.x-e.width/2
-    //   		val ex2 = e.x+e.width/2
-    //   		val ey1 = e.y-e.height/2
-    //   		val ey2 = e.y+e.height/2
+    def collision(e: Enemy) {
+    	val eSize = max(e.width, e.height)
+    	var xVec = e.x - x
+      	var yVec = e.y - y
+      	var norm = sqrt((xVec * xVec) + (yVec * yVec))
+      	if (norm - eSize < 70) {
+      		val ex1 = e.x-e.width/2
+      		val ex2 = e.x+e.width/2
+      		val ey1 = e.y-e.height/2
+      		val ey2 = e.y+e.height/2
 
-    //   		var resist: Double
-    //   		if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey1)) {
-    //   			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex1))
-    //   		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey2)) {
-    //   			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex1))
-    //   		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey1)) {
-    //   			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex2))
-    //   		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey2)) {
-    //   			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex2))
-    //   		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by1)) {
-    //   			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y))
-    //   		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by2)) {
-    //   			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by2, e.x, e.y))
-    //   		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by1)) {
-    //   			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by1, e.x, e.y))
-    //   		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by2)) {
-    //   			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y))
-    //   		}
-    //   	}
-    // }
+      		var collide = false
+      		// var resist: Double
+      		if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey1)) {
+      			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex1))
+      			xVec = ex1 - x
+      			yVec = ey1 - y
+      			collide = true
+      		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey2)) {
+      			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex1))
+      			xVec = ex1 - x
+      			yVec = ey2 - y
+      			collide = true
+      		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey1)) {
+      			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex2))
+      			xVec = ex2 - x
+      			yVec = ey1 - y
+      			collide = true
+      		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey2)) {
+      			// resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex2))
+      			xVec = ex2 - x
+      			yVec = ey2 - y
+      			collide = true
+      		} 
+
+      		if (collide) {
+      			norm = sqrt((xVec * xVec) + (yVec * yVec))
+      			var theta = toDegrees(atan2(yVec, xVec))
+      			var dTheta = theta - ang
+      			// ang - floor(cos(theta) * norm * resist)
+      			xVec = xVec * sin(theta)
+      			yVec = yVec * sin(theta)
+      		}
+
+      		if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by1)) {
+      			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y))
+      			xVec = bx1 - x
+      			yVec = by1 - y
+      			collide = true
+      		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by2)) {
+      			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by2, e.x, e.y))
+      			xVec = bx1 - x
+      			yVec = by2 - y
+      			collide = true
+      		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by1)) {
+      			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by1, e.x, e.y))
+      			xVec = bx2 - x
+      			yVec = by1 - y
+      			collide = true
+      		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by2)) {
+      			// resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y))
+      			xVec = bx2 - x
+      			yVec = by2 - y
+      			collide = true
+      		}
+
+      		if (collide) {
+      			norm = sqrt((xVec * xVec) + (yVec * yVec))
+      			// xVel -= resist * xVec / norm
+      			// yVec -= resist * yVec / norm
+      		}
+      	}
+    }
 
 
 
