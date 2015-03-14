@@ -30,10 +30,10 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   def airAcc = base.airAcc
   def arcs = base.arcs
   var stopDist = base.stopDist
+  var xAcc = base.xAcc
 
   def width = 30
   def height = 40
-  var stopped = false
 
   val img = images(id).copy
   def update(delta: Long) = img.update(delta)
@@ -45,7 +45,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
     if (x > stopDist) {
       x = x - xVel
     } else {
-      stopped = true
+      stop
     }
     if (y + yVel > Ground - 20) {
       yVel = 0
@@ -55,6 +55,22 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
       y = y + yVel
     }
   }
+  def stop() = {
+    
+  }
+  def restart() = {
+    stopDist = 0
+  }
+  def hit(pow: Float, hitAng: Float): Float = {
+    val temp = (hitAng + 180) % 360
+    xVel = xVel + pow*(math.cos(temp)).asInstanceOf[Float]
+    yVel = yVel - pow*(math.sin(temp)).asInstanceOf[Float]
+    hp = hp - pow
+    if (hp < 0) {
+      inactivate
+    }
+    0
+  }
 }
 
 trait EnemyType {
@@ -63,6 +79,7 @@ trait EnemyType {
   def maxHp: Float
   val xVel: Float = 1
   val yVel: Float = 0
+  var xAcc: Float = 0.5f
 
   def shotType: Int = ArrowID
   def shotInterval: Int = 60
@@ -88,8 +105,35 @@ object Knight extends EnemyType {
   val difficulty = 1
 }
 
-class Knight(x: Float, y: Float) extends Enemy(Knight, x, y) {
+class Knight(xc: Float, yc: Float) extends Enemy(Knight, xc, yc) {
+  override def move() = {
+    if (x > stopDist + 50 ) {
+      xVel = xVel + xAcc
+      if (xVel > 1) {
+        xVel = 1
+      }
+      x = x - xVel
+    } else if (x > stopDist && x <= stopDist + 50) {
+       if (xVel > 0) {
+         xVel = 5
+         yVel = -2
+       }
+       x = x - xVel
 
+    } else {
+      x = stopDist + 1
+      xVel = -10
+      yVel = -3
+    }
+    if (y + yVel > Ground - 20) {
+      yVel = 0
+      y = Ground - 20
+    } else {
+      yVel = yVel + 0.4f
+      y = y + yVel
+    }
+  }
+ 
 }
 
 object Archer extends EnemyType {
