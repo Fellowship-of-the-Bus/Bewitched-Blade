@@ -1,7 +1,7 @@
 package com.github.fellowship_of_the_bus
 package bewitched_blade
 package state
-import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException, Color, Input}
+import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException,Color, Input}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
 import BewitchedBlade.{Ground}
@@ -30,7 +30,7 @@ class GameState extends BasicGameState {
         xs <- objs
         o <- xs
         if (o.active)
-      } o.draw(g)
+      } o.draw()
 
     drawAll(gameState.enemies)
 
