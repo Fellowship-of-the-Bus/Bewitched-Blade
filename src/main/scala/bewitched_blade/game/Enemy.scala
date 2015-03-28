@@ -5,7 +5,7 @@ package game
 import IDMap._
 import BewitchedBlade.Ground
 import lib.util.rand
-import lib.game.GameConfig.Width
+import lib.game.GameConfig.{Width,Height}
 import lib.game.Lifebar
 import org.newdawn.slick.Graphics
 
@@ -22,8 +22,8 @@ object Enemy {
 abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(xc, yc) with Lifebar {
   var hp = base.maxHp
   val id = base.id
-  protected var xVel = base.xVel
-  protected var yVel = base.yVel
+  protected[game] var xVel = base.xVel
+  protected[game] var yVel = base.yVel
   val difficulty = base.difficulty
   def numShot = base.numShot
   def shotDelay = base.shotDelay
@@ -37,6 +37,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   var stopDist = base.stopDist
   var xAcc = base.xAcc
   var inert = base.inert
+  var thrown = base.thrown
 
   def width = 30
   def height = 40
@@ -85,7 +86,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
     if (hp <= 0) {
       inactivate
     }
-     Math.sqrt(pow).asInstanceOf[Float]
+    Math.sqrt(pow).asInstanceOf[Float]
   }
 }
 
@@ -107,6 +108,7 @@ trait EnemyType {
   def arcs = false
   var stopDist = 100
   val inert = 1
+  var thrown = false
 }
 
 trait Shield {
@@ -124,8 +126,15 @@ object Knight extends EnemyType {
 }
 
 class Knight(xc: Float, yc: Float) extends Enemy(Knight, xc, yc) {
-  override def move() = {
-    if (x > stopDist + 50 ) {
+  def kmove(ga: Game) = {
+    if (x < 30) {
+      if (!ga.isGameOver) {
+
+        ga.castle.collapse
+      } else {
+        x = x - xVel
+      }
+    } else if (x > stopDist + 50 ) {
       xVel = xVel + xAcc
       if (xVel > 1) {
         xVel = 1
@@ -142,16 +151,21 @@ class Knight(xc: Float, yc: Float) extends Enemy(Knight, xc, yc) {
       x = stopDist + 1
       xVel = -10
       yVel = -3
+      ga.castle.hit(20)
+      x = x - xVel
+      y = y - yVel
     }
-    if (y + yVel > Ground - 20) {
+    if (y + yVel > Ground - 20 && !thrown) {
       yVel = 0
       y = Ground - 20
     } else {
       yVel = yVel + 0.4f
       y = y + yVel
     }
+    if (x < -30 || y > Height+30) {
+      inactivate
+    }
   }
- 
 }
 
 object Archer extends EnemyType {

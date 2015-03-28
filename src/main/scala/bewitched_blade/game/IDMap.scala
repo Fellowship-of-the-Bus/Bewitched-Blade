@@ -19,7 +19,7 @@ object IDMap{
   val BaseID = 101
   val TowerLvlID = 102
   val DoorID = 103
-  val BrokenDoor = 104
+  val BrokenDoorID = 104
   val TopID = 105
   val WizardID = 106
 
@@ -38,7 +38,7 @@ object IDMap{
     BaseID -> "img/base.png",
     TowerLvlID -> "img/towerLvl.png",
     DoorID -> "img/Door.png",
-    BrokenDoor -> "img/BrokenDoor.png",
+    BrokenDoorID -> "img/BrokenDoor.png",
     TopID -> "img/Blade.png",//placeholder
     WizardID ->"img/Wizard.png",
 
