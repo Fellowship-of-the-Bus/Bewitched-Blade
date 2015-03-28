@@ -45,7 +45,8 @@ class Game {
     }
 
     for (p <- enemyProjectiles; if (p.active)) {
-       p.move()
+      blade.collision(p)
+      p.move()
     }
 
     counter = counter + 1

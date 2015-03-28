@@ -28,8 +28,8 @@ abstract class Projectile(base: ProjectileType, xc: Float, yc: Float, xv: Float,
   val width = base.width
   val height = base.height
 
-  protected var xVel = xv
-  protected var yVel = yv
+  protected[game] var xVel = xv
+  protected[game] var yVel = yv
   
   var ang: Float = 0
 
