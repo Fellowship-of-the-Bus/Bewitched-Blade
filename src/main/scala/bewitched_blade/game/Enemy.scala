@@ -73,10 +73,11 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
     img.start
   }
   def hit(pow: Float, hitAng: Float): Float = {
+    val kbPow = Math.min(pow, 5)
     val temp = (hitAng + 180) % 360
-    xVel = xVel + pow*(math.cos(temp)).asInstanceOf[Float]
-    yVel = yVel - pow*(math.sin(temp)).asInstanceOf[Float]
-    hp = Math.max(hp - pow, 0)
+    xVel = xVel + kbPow*(math.cos(temp)).asInstanceOf[Float]
+    yVel = yVel - kbPow*(math.sin(temp)).asInstanceOf[Float]
+    hp = Math.max(hp - Math.sqrt(pow).asInstanceOf[Float], 0)
     if (hp <= 0) {
       inactivate
     }
