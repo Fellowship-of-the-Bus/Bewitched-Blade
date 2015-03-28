@@ -2,8 +2,9 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade
 package state
 
-import lib.ui.Button
+import lib.ui.{Button, ToggleButton}
 import game.IDMap._
+import lib.game.GameConfig
 import lib.game.GameConfig.{Width,Height}
 
 import org.newdawn.slick.{GameContainer, Graphics, Color, Input, KeyListener}
@@ -51,7 +52,10 @@ object Options extends BasicGameState {
   implicit val id = getID
 
   lazy val choices = List(
-    Button("Back", centerx, 200, () => SBGame.enterState(Mode.MenuID)))
+    ToggleButton("Display Lifebars", centerx, 200, 
+      () => GameConfig.showLifebars = !GameConfig.showLifebars, // update
+      () => GameConfig.showLifebars), // query
+    Button("Back", centerx, 200+30, () => SBGame.enterState(Mode.MenuID)))
 
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     import Mode._

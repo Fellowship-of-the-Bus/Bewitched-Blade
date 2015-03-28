@@ -1,10 +1,13 @@
 package com.github.fellowship_of_the_bus
 package bewitched_blade
 package game
+
 import IDMap._
 import BewitchedBlade.Ground
 import lib.util.rand
 import lib.game.GameConfig.Width
+import lib.game.Lifebar
+import org.newdawn.slick.Graphics
 
 object Enemy {
   def apply (eid: Int) = {
@@ -16,7 +19,7 @@ object Enemy {
   }
 }
 
-abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(xc, yc) {
+abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(xc, yc) with Lifebar {
   var hp = base.maxHp
   val id = base.id
   protected var xVel = base.xVel
@@ -30,6 +33,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   def groundAcc = base.groundAcc
   def airAcc = base.airAcc
   def arcs = base.arcs
+  def maxHp = base.maxHp
   var stopDist = base.stopDist
   var xAcc = base.xAcc
 
@@ -38,7 +42,8 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
 
   val img = images(id).copy
   def update(delta: Long) = img.update(delta)
-  def draw() = {
+  override def draw(g: Graphics) = {
+    super.draw(g)
     val (x, y) = topLeftCoord
     img.draw(x, y)
   }
