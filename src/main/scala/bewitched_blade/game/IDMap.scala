@@ -33,7 +33,7 @@ object IDMap{
 
     KnightID -> Array("img/Knight.png", "img/Knight2.png"),
     ArcherID -> Array("img/Archer.png", "img/Archer2.png"),
-    CatapultID -> "img/Catapult.png",
+    CatapultID -> Array("img/Catapult2.png", "img/Catapult.png"),
 
     CausewayID -> "img/Causeway.png",
     BaseID -> "img/base.png",

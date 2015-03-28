@@ -16,6 +16,7 @@ object Enemy {
       case ArcherID => new Archer(Width, Ground-20)
       case CatapultID => new Catapult(Width, Ground -20) 
     }
+    new Archer(Width, Ground -20) 
   }
 }
 
@@ -60,7 +61,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
     } else {
       stop
     }
-    if (y + yVel > Ground - 20) {
+    if (y + yVel > Ground - 21) {
       yVel = 0
       y = Ground - 20
     } else {
@@ -201,9 +202,29 @@ object Catapult extends EnemyType {
 }
 class Catapult(xc: Float, yc: Float) extends Enemy(Catapult, xc, yc) with Shooter {
   stopDist = 650 + rand(50)
+
+  override def stop() = stopped = true
+  override def restart() = stopDist = 0
+
+  img.setCurrentFrame(1)
+
+  img.setDuration(0, 2000)
+  img.setDuration(1, 10000)
+
+  override def update(delta: Long) = {
+    if (stopped) img.update(delta)
+  }
+
   override def shoot() = {
     if (stopped) {
-      super.shoot
+      val shot = super.shoot
+      shot match {
+        case Some(_) =>
+          img.setCurrentFrame(0)
+          img.start
+        case None => ()
+      }
+      shot
     } else {
       None
     }
