@@ -143,7 +143,7 @@ class Blade (xc : Float, yc : Float) {
     }
 
     def power() = {
-    	((sqrt((xVel * xVel) + (yVel * yVel)) + abs(angVel)) / 100).asInstanceOf[Float]
+    	((sqrt((xVel * xVel) + (yVel * yVel)) + abs(angVel)) / 4).asInstanceOf[Float]
     }
 
     def collision(e: Enemy) {
