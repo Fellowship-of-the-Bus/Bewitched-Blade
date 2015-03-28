@@ -9,7 +9,7 @@ import lib.game.GameConfig.{Height,Width}
 
 class Game {
   val blade = new Blade(300,400)
-  var towerHeight = 400
+  var towerHeight = 520
   val castle = new Castle(this)
 
   var enemies: List[Enemy] = List()

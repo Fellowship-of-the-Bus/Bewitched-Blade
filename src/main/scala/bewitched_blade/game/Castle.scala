@@ -54,6 +54,7 @@ class Castle(ga: Game) {
       game.gameOver
     } else {
       levels = levels -1
+      game.towerHeight -= 111
       resetHp
       for (e <- game.enemies; if(e.active) && e.id == KnightID) {
         if (e.x < 100) {

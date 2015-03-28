@@ -38,6 +38,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   var xAcc = base.xAcc
   var inert = base.inert
   var thrown = base.thrown
+  var stopped = base.stopped
 
   def width = 30
   def height = 40
@@ -69,6 +70,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   }
   def stop() = {
     img.stop
+    stopped = true
   }
   def restart() = {
     stopDist = 0
@@ -109,6 +111,7 @@ trait EnemyType {
   var stopDist = 100
   val inert = 1
   var thrown = false
+  var stopped = false
 }
 
 trait Shield {
@@ -198,4 +201,11 @@ object Catapult extends EnemyType {
 }
 class Catapult(xc: Float, yc: Float) extends Enemy(Catapult, xc, yc) with Shooter {
   stopDist = 650 + rand(50)
+  override def shoot() = {
+    if (stopped) {
+      super.shoot
+    } else {
+      None
+    }
+  }
 }
