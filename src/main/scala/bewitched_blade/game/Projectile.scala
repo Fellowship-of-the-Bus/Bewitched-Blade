@@ -30,6 +30,8 @@ abstract class Projectile(base: ProjectileType, xc: Float, yc: Float, xv: Float,
 
   protected[game] var xVel = xv
   protected[game] var yVel = yv
+
+  protected[game] var reflected = false
   
   var ang: Float = 0
 

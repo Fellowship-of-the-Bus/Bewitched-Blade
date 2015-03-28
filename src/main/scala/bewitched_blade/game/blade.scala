@@ -226,31 +226,31 @@ class Blade (xc : Float, yc : Float) {
 
 
     def collision(p: Projectile) {
-      val pSize = max(p.width, p.height)
-      var xVec: Double = p.x - x
-      var yVec: Double = p.y - y
-      var norm = sqrt((xVec * xVec) + (yVec * yVec))
-      if (norm - pSize < 70) {
-        val px1 = p.x-p.width/2
-        val px2 = p.x+p.width/2
-        val py1 = p.y-p.height/2
-        val py2 = p.y+p.height/2
+      if (! p.reflected) {
+        val pSize = max(p.width, p.height)
+        var xVec: Double = p.x - x
+        var yVec: Double = p.y - y
+        var norm = sqrt((xVec * xVec) + (yVec * yVec))
+        if (norm - pSize < 70) {
+          val px1 = p.x-p.width/2
+          val px2 = p.x+p.width/2
+          val py1 = p.y-p.height/2
+          val py2 = p.y+p.height/2
 
-        var collide = false
-        if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,px1,py1)
-         || inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,px1,py2)
-         || inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,px2,py1)
-         || inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,px2,py2)
-         || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx1,by1)
-         || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx2,by2)
-         || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx3,by3)
-         || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx4,by4)) {
-          collide = true
-        }
+          if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,px1,py1)
+           || inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,px1,py2)
+           || inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,px2,py1)
+           || inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,px2,py2)
+           || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx1,by1)
+           || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx2,by2)
+           || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx3,by3)
+           || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx4,by4)) {
 
-        if (collide) {
-          p.xVel *= -1 
-          p.yVel *= -1
+            p.xVel *= -1 
+            p.yVel *= -1
+
+            p.reflected = true
+          }
         }
       }
     }
