@@ -26,7 +26,9 @@ class Game {
   private var enemyPower = 5
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     implicit val input = gc.getInput
-    blade.move(input.getMouseX,input.getMouseY)
+    if (!isGameOver) {
+     blade.move(input.getMouseX,input.getMouseY)
+    }
 
     for (e <- enemies; if (e.active)) {
       blade.collision(e)

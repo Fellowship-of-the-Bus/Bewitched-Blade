@@ -41,6 +41,12 @@ class GameState extends BasicGameState {
       p.draw(g)
     }
 
+    if (gameState.isGameOver) {
+      g.setColor(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
+      g.fillRect(0, 0, Width, Height)
+      images(GameOverID).draw(0,0)
+//      g.drawImage(images(GameOverID), 0, 0)
+
 //    var i: Image = IDMap.images(gameState.blade.id)
 //    for (j <- 0 to 10) {
 //      i.setCenterOfRotation(10,10)
@@ -48,6 +54,7 @@ class GameState extends BasicGameState {
 //      g.drawImage(i, j*50, j*50)
 //      g.fillOval(j*50, j*50, 10,10)
 //    }
+    }
   }
 
   def init(gc: GameContainer, game: StateBasedGame) = {

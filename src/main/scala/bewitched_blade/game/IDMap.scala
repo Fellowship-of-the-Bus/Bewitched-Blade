@@ -24,6 +24,7 @@ object IDMap{
   val WizardID = 106
 
   val FotBLogoID = 1000
+  val GameOverID = 1001
 
   val imageMap = Map(
     bladeID -> "img/Blade.png",
@@ -42,7 +43,8 @@ object IDMap{
     TopID -> "img/Blade.png",//placeholder
     WizardID ->"img/Wizard.png",
 
-    FotBLogoID -> "img/FotB-Logo.png"
+    FotBLogoID -> "img/FotB-Logo.png",
+    GameOverID -> "img/GameOver.png"
   )
 
   lazy val images: Map[Int, ui.Drawable] = imageMap.map { x =>
