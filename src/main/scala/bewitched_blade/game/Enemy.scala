@@ -76,8 +76,8 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
     val temp = (hitAng + 180) % 360
     xVel = xVel + pow*(math.cos(temp)).asInstanceOf[Float]
     yVel = yVel - pow*(math.sin(temp)).asInstanceOf[Float]
-    hp = hp - pow
-    if (hp < 0) {
+    hp = Math.max(hp - pow, 0)
+    if (hp <= 0) {
       inactivate
     }
     0
