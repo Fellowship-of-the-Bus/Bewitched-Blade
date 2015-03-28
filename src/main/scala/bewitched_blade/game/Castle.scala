@@ -30,6 +30,8 @@ class Castle(ga: Game) {
       img = IDMap.images(TowerLvlID)
       img.draw(0, Height - i*111-285)
     }
+    img = IDMap.images(TopID)
+    img.draw(0, Height-285 - levels*111-20)
     img = IDMap.images(WizardID)
     img.draw(25, Height-285 - levels*111-20)
     if (hp > 0) {

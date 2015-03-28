@@ -40,7 +40,7 @@ object IDMap{
     TowerLvlID -> "img/towerLvl.png",
     DoorID -> "img/Door.png",
     BrokenDoorID -> "img/BrokenDoor.png",
-    TopID -> "img/Blade.png",//placeholder
+    TopID -> "img/TowerTop.png",
     WizardID ->"img/Wizard.png",
 
     FotBLogoID -> "img/FotB-Logo.png",
