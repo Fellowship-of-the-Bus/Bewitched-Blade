@@ -54,7 +54,7 @@ class Game {
     if (counter == spawnTimer) {
       // periodically remove inactive objects
       cleanup
-      var curEP = enemyPower
+      var curEP = enemyPower / 4
       var startMod = 0
       // var startMod: Int = math.min(
       //                   math.max(math.floor(math.log10(score)-4).asInstanceOf[Int], 0),

@@ -27,10 +27,15 @@ class Blade (xc : Float, yc : Float) {
     private var bx2 = x + 70.0
     private var bx3 = x + -10.0
     private var bx4 = x + -10.0
+    private var bx5 = x + 30.0
+    private var bx6 = x + 30.0
+
     private var by1 = y + 10*cos(ang)
     private var by2 = y + -10*cos(ang)
     private var by3 = y + 10*cos(ang)
     private var by4 = y + -10*cos(ang)
+    private var by5 = y + 10*cos(ang)
+    private var by6 = y + -10*cos(ang)
 
     def move(mx : Float, my : Float) = {
    	  var xVec = mx - x
@@ -52,10 +57,14 @@ class Blade (xc : Float, yc : Float) {
 	  bx2 = x + 70*cAng + 10*sAng
 	  bx3 = x + -10*cAng - 10*sAng
 	  bx4 = x + -10*cAng + 10*sAng
+	  bx5 = x + 30*cAng - 10*sAng
+	  bx6 = x + 30*cAng + 10*sAng
 	  by1 = y + 70*sAng + 10*cAng
 	  by2 = y + 70*sAng - 10*cAng
 	  by3 = y + -10*sAng + 10*cAng
 	  by4 = y + -10*sAng - 10*cAng
+	  by5 = y + 30*sAng + 10*cAng
+	  by6 = y + 30*sAng - 10*cAng
 
       var norm = sqrt((xVec * xVec) + (yVec * yVec)) 
       if (norm < 0.01) {
@@ -99,6 +108,8 @@ class Blade (xc : Float, yc : Float) {
         // g.fillOval(bx2.asInstanceOf[Float],by2.asInstanceOf[Float],10,10)
         // g.fillOval(bx3.asInstanceOf[Float],by3.asInstanceOf[Float],10,10)
         // g.fillOval(bx4.asInstanceOf[Float],by4.asInstanceOf[Float],10,10)
+        // g.fillOval(bx5.asInstanceOf[Float],by5.asInstanceOf[Float],10,10)
+        // g.fillOval(bx6.asInstanceOf[Float],by6.asInstanceOf[Float],10,10)
         // g.drawImage(i, x-10, y-10)
     }
 
@@ -124,6 +135,10 @@ class Blade (xc : Float, yc : Float) {
 
     def inRect(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double, x5: Double, y5: Double) = {
     	sameSide(x1,y1,x2,y2,x3,y3,x5,y5) && sameSide(x2,y2,x3,y3,x4,y4,x5,y5) && sameSide(x3,y3,x4,y4,x1,y1,x5,y5) && sameSide(x4,y4,x1,y1,x3,y3,x5,y5)
+    }
+
+    def inTriangle(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x: Double, y: Double) = {
+    	(sameSide(x1,y1,x2,y2,x3,y3,x,y) && sameSide(x2,y2,x3,y3,x1,y1,x,y) && sameSide(x3,y3,x2,y2,x1,y1,x,y))
     }
 
     def nearSideAng(x1: Double, y1: Double, x2: Double, y2:Double, x3: Double, y3: Double, x4: Double, y4: Double) = {
@@ -191,20 +206,16 @@ class Blade (xc : Float, yc : Float) {
       		}
 
       		if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by1)) {
-
-
       			resist = e.hit(power(), nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y).asInstanceOf[Float])
       			xVec = bx1 - x
       			yVec = by1 - y
       			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by2)) {
-
       			resist = e.hit(power(), nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y).asInstanceOf[Float])
       			xVec = bx2 - x
       			yVec = by2 - y
       			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx3,by3)) {
-
       			resist = e.hit(power(), nearSideAng(ex1, ey1, ex2, ey2, bx3, by3, e.x, e.y).asInstanceOf[Float])
       			xVec = bx3 - x
       			yVec = by3 - y
@@ -244,7 +255,9 @@ class Blade (xc : Float, yc : Float) {
          || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx1,by1)
          || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx2,by2)
          || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx3,by3)
-         || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx4,by4)) {
+         || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx4,by4)
+         || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx5,by5)
+         || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx6,by6)) {
           collide = true
         }
 

@@ -173,7 +173,7 @@ class Archer(xc: Float, yc:Float) extends Enemy(Archer,xc,yc) with Shooter{
 object Catapult extends EnemyType {
   val id = CatapultID
   val maxHp = 100.0f
-  val difficulty = 4
+  val difficulty = 10
   override val shotInterval = 59*8
   override val shotType = RockID
   override val groundAcc = 25
