@@ -10,7 +10,7 @@ import lib.game.GameConfig.{Height,Width}
 class Game {
   val blade = new Blade(300,400)
   var towerHeight = 400
-  val castle = new Castle
+  val castle = new Castle(this)
 
   var enemies: List[Enemy] = List()
   var enemyProjectiles: List[Projectile] = List()
@@ -30,7 +30,11 @@ class Game {
 
     for (e <- enemies; if (e.active)) {
       blade.collision(e)
-      e.move()
+      if (e.id == KnightID) {
+        e.asInstanceOf[Knight].kmove(this)
+      } else {
+        e.move()
+      }
       e.update(delta)
       e match {
         case sh: Shooter =>

@@ -30,13 +30,15 @@ abstract class Projectile(base: ProjectileType, xc: Float, yc: Float, xv: Float,
 
   protected[game] var xVel = xv
   protected[game] var yVel = yv
+
+  protected[game] var reflected = false
   
   var ang: Float = 0
 
   val id = base.id
 
   override def move() {
-    ang = math.toDegrees(math.atan2(yv, xv)).asInstanceOf[Float]
+    ang = math.toDegrees(math.atan2(yVel, xVel)).asInstanceOf[Float]
     x = x + xVel
     y = y + yVel
     if (x < -width || x > Width+width) {
