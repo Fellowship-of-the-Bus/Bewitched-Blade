@@ -25,7 +25,7 @@ object BewitchedBlade extends App {
   GameConfig.Height = 600
   GameConfig.FrameRate = 60
   val Ground = 450
-  val game = new GameState
+  lazy val game = new GameState
 
   try {
     import GameConfig._

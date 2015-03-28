@@ -16,7 +16,6 @@ object Enemy {
       case ArcherID => new Archer(Width, Ground-20)
       case CatapultID => new Catapult(Width, Ground -20) 
     }
-    new Archer(Width, Ground -20) 
   }
 }
 

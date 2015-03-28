@@ -37,7 +37,7 @@ object IDMap{
 
     CausewayID -> "img/Causeway.png",
     BaseID -> "img/base.png",
-    TowerLvlID -> "img/towerLvl.png",
+    TowerLvlID -> "img/TowerLvl.png",
     DoorID -> "img/Door.png",
     BrokenDoorID -> "img/BrokenDoor.png",
     TopID -> "img/TowerTop.png",

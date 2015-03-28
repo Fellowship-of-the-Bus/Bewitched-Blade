@@ -55,35 +55,31 @@ class Game {
       p.move()
     }
 
-    if (counter == 0) {
-      enemies = Enemy(EnemyStart) :: enemies
-      counter = 1
-    }
-    // counter = counter + 1
-    // // periodically spawn move enemies
-    // if (counter == spawnTimer) {
-    //   // periodically remove inactive objects
-    //   cleanup
-    //   var curEP = enemyPower / 4
-    //   var startMod = 0
-    //   // var startMod: Int = math.min(
-    //   //                   math.max(math.floor(math.log10(score)-4).asInstanceOf[Int], 0),
-    //   //                   2)
-    //   // var eTypeFrame = EnemyEnd-EnemyStart
-    //   var eTypeFrame = 1
-    //   while (curEP > 0) {
-    //     // val e = Enemy(math.min(rand(eTypeFrame)+ EnemyStart + startMod, EnemyEnd - 1))
-    //     //val e = Enemy(KnightID)
-    //     //val e = Enemy(ArcherID)
-    //     import lib.util.rand
-    //     val e = Enemy(EnemyStart + rand(EnemyEnd - EnemyStart))
-    //     curEP -= e.difficulty
-    //     enemies = e :: enemies
-    //   }
+    counter = counter + 1
+    // periodically spawn move enemies
+    if (counter == spawnTimer) {
+      // periodically remove inactive objects
+      cleanup
+      var curEP = enemyPower / 4
+      var startMod = 0
+      // var startMod: Int = math.min(
+      //                   math.max(math.floor(math.log10(score)-4).asInstanceOf[Int], 0),
+      //                   2)
+      // var eTypeFrame = EnemyEnd-EnemyStart
+      var eTypeFrame = 1
+      while (curEP > 0) {
+        // val e = Enemy(math.min(rand(eTypeFrame)+ EnemyStart + startMod, EnemyEnd - 1))
+        //val e = Enemy(KnightID)
+        //val e = Enemy(ArcherID)
+        import lib.util.rand
+        val e = Enemy(EnemyStart + rand(EnemyEnd - EnemyStart))
+        curEP -= e.difficulty
+        enemies = e :: enemies
+      }
 
-    //   enemyPower += 1
-    //   counter = 0
-    // }
+      enemyPower += 1
+      counter = 0
+    }
   }
 
   var isGameOver = false
