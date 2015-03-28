@@ -216,6 +216,7 @@ class Catapult(xc: Float, yc: Float) extends Enemy(Catapult, xc, yc) with Shoote
 
   override def shoot() = {
     if (stopped) {
+      x = x + 60
       val shot = super.shoot
       shot match {
         case Some(_) =>
@@ -223,6 +224,7 @@ class Catapult(xc: Float, yc: Float) extends Enemy(Catapult, xc, yc) with Shoote
           img.start
         case None => ()
       }
+      x= x - 60
       shot
     } else {
       None
