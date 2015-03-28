@@ -112,7 +112,7 @@ trait Shield {
 
 object Knight extends EnemyType {
   val id = KnightID
-  val maxHp = 1.0f
+  val maxHp = 30.0f
   val difficulty = 1
 }
 
@@ -149,7 +149,7 @@ class Knight(xc: Float, yc: Float) extends Enemy(Knight, xc, yc) {
 
 object Archer extends EnemyType {
   val id = ArcherID
-  val maxHp = 1.0f
+  val maxHp = 10.0f
   val difficulty = 2
 
   override val shotInterval = 59 * 5
@@ -164,7 +164,7 @@ class Archer(xc: Float, yc:Float) extends Enemy(Archer,xc,yc) with Shooter{
 
 object Catapult extends EnemyType {
   val id = CatapultID
-  val maxHp = 2.0f
+  val maxHp = 100.0f
   val difficulty = 4
   override val shotInterval = 59*8
   override val shotType = RockID

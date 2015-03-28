@@ -142,6 +142,10 @@ class Blade (xc : Float, yc : Float) {
     	}
     }
 
+    def power() = {
+    	((sqrt((xVel * xVel) + (yVel * yVel)) + abs(angVel)) / 100).asInstanceOf[Float]
+    }
+
     def collision(e: Enemy) {
     	val eSize = max(e.width, e.height)
     	var xVec: Double = e.x - x
@@ -156,22 +160,22 @@ class Blade (xc : Float, yc : Float) {
       		var collide = false
       		var resist: Double = 0
       		if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey1)) {
-      		 	resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex1).asInstanceOf[Float])
+      		 	resist = e.hit(power(), atan2(e.y - ey1, e.x - ex1).asInstanceOf[Float])
       		 	xVec = ex1 - x
       		 	yVec = ey1 - y
       		 	collide = true
       		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex1,ey2)) {
-      			resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex1).asInstanceOf[Float])
+      			resist = e.hit(power(), atan2(e.y - ey2, e.x - ex1).asInstanceOf[Float])
       			xVec = ex1 - x
       			yVec = ey2 - y
       			collide = true
       		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey1)) {
-      			resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey1, e.x - ex2).asInstanceOf[Float])
+      			resist = e.hit(power(), atan2(e.y - ey1, e.x - ex2).asInstanceOf[Float])
       			xVec = ex2 - x
       			yVec = ey1 - y
       			collide = true
       		} else if (inRect(bx1,by1,bx2,by2,bx3,by3,bx4,by4,ex2,ey2)) {
-      			resist = e.hit(angVel + xVel + yVel, atan2(e.y - ey2, e.x - ex2).asInstanceOf[Float])
+      			resist = e.hit(power(), atan2(e.y - ey2, e.x - ex2).asInstanceOf[Float])
       			xVec = ex2 - x
       			yVec = ey2 - y
       			collide = true
@@ -189,24 +193,24 @@ class Blade (xc : Float, yc : Float) {
       		if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx1,by1)) {
 
 
-      			resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y).asInstanceOf[Float])
+      			resist = e.hit(power(), nearSideAng(ex1, ey1, ex2, ey2, bx1, by1, e.x, e.y).asInstanceOf[Float])
       			xVec = bx1 - x
       			yVec = by1 - y
       			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx2,by2)) {
 
-      			resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y).asInstanceOf[Float])
+      			resist = e.hit(power(), nearSideAng(ex1, ey1, ex2, ey2, bx2, by2, e.x, e.y).asInstanceOf[Float])
       			xVec = bx2 - x
       			yVec = by2 - y
       			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx3,by3)) {
 
-      			resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx3, by3, e.x, e.y).asInstanceOf[Float])
+      			resist = e.hit(power(), nearSideAng(ex1, ey1, ex2, ey2, bx3, by3, e.x, e.y).asInstanceOf[Float])
       			xVec = bx3 - x
       			yVec = by3 - y
       			collide = true
       		} else if (inRect(ex1,ey1,ex2,ey1,ex2,ey2,ex1,ey2,bx4,by4)) {
-      			resist = e.hit(angVel + xVel + yVel, nearSideAng(ex1, ey1, ex2, ey2, bx4, by4, e.x, e.y).asInstanceOf[Float])
+      			resist = e.hit(power(), nearSideAng(ex1, ey1, ex2, ey2, bx4, by4, e.x, e.y).asInstanceOf[Float])
       			xVec = bx4 - x
       			yVec = by4 - y
       			collide = true
