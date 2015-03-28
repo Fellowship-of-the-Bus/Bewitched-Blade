@@ -85,7 +85,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
     if (hp <= 0) {
       inactivate
     }
-    0
+     Math.sqrt(pow).asInstanceOf[Float]
   }
 }
 

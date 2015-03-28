@@ -185,7 +185,7 @@ class Blade (xc : Float, yc : Float) {
       			norm = sqrt((xVec * xVec) + (yVec * yVec))
       			var theta = toDegrees(atan2(yVec, xVec))
       			var dTheta = theta - ang
-      			ang - floor(cos(theta) * norm * resist)
+      			ang -= floor(cos(theta) * norm * resist).asInstanceOf[Float]
       			xVec = xVec * sin(theta)
       			yVec = yVec * sin(theta)
       		}
