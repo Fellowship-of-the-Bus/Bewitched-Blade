@@ -16,19 +16,31 @@ object IDMap{
   val EnemyEnd = 13
 
   val CausewayID = 100
+  val BaseID = 101
+  val TowerLvlID = 102
+  val DoorID = 103
+  val BrokenDoor = 104
+  val TopID = 105
+  val WizardID = 106
 
   val FotBLogoID = 1000
 
   val imageMap = Map(
     bladeID -> "img/Blade.png",
     ArrowID -> "img/Arrow.png", 
-    RockID -> "img/Knight.png",
+    RockID -> "img/Boulder.png",
 
     KnightID -> Array("img/Knight.png", "img/Knight2.png"),
     ArcherID -> Array("img/Archer.png", "img/Archer2.png"),
-    CatapultID -> "img/Blade.png",
+    CatapultID -> "img/Catapult.png",
 
     CausewayID -> "img/Causeway.png",
+    BaseID -> "img/base.png",
+    TowerLvlID -> "img/towerLvl.png",
+    DoorID -> "img/Door.png",
+    BrokenDoor -> "img/BrokenDoor.png",
+    TopID -> "img/Blade.png",//placeholder
+    WizardID ->"img/Wizard.png",
 
     FotBLogoID -> "img/FotB-Logo.png"
   )

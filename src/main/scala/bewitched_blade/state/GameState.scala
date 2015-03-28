@@ -24,6 +24,7 @@ class GameState extends BasicGameState {
     val lightBlue = new Color(150,150,255,0)
     g.setBackground(lightBlue)
     images(CausewayID).draw(0, Ground)
+    gameState.castle.draw(g)
 
     def drawAll(objs: List[Enemy]*): Unit =
       for {

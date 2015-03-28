@@ -72,7 +72,7 @@ object Rock extends ProjectileType {
 
 class Rock(xc:Float, yc:Float, xv:Float, yv:Float) extends Projectile(Rock,xc,yc,xv,yv) {
   override def move() {
-    ang = math.toDegrees(math.atan2(yv, xv)).asInstanceOf[Float]
+    ang = math.toDegrees(math.atan2(yVel, xVel)).asInstanceOf[Float]
     x = x + xVel
     yVel = yVel + 0.1f
     y = y + yVel

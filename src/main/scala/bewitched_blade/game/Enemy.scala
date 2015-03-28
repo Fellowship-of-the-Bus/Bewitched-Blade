@@ -36,6 +36,7 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
   def maxHp = base.maxHp
   var stopDist = base.stopDist
   var xAcc = base.xAcc
+  var inert = base.inert
 
   def width = 30
   def height = 40
@@ -73,7 +74,10 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
     img.start
   }
   def hit(pow: Float, hitAng: Float): Float = {
-    val kbPow = Math.min(pow, 5)
+    var kbPow = Math.min(pow, 5) - inert
+    if (kbPow < 0) {
+      kbPow = 0
+    }
     val temp = (hitAng + 180) % 360
     xVel = xVel + kbPow*(math.cos(temp)).asInstanceOf[Float]
     yVel = yVel - kbPow*(math.sin(temp)).asInstanceOf[Float]
@@ -102,6 +106,7 @@ trait EnemyType {
   def airAcc = 50
   def arcs = false
   var stopDist = 100
+  val inert = 1
 }
 
 trait Shield {
@@ -115,6 +120,7 @@ object Knight extends EnemyType {
   val id = KnightID
   val maxHp = 30.0f
   val difficulty = 1
+  override val inert = 2
 }
 
 class Knight(xc: Float, yc: Float) extends Enemy(Knight, xc, yc) {
@@ -157,6 +163,7 @@ object Archer extends EnemyType {
   override val shotType = ArrowID
   override val groundAcc = 75
   override val airAcc = 45
+  override val inert = 0
 }
 
 class Archer(xc: Float, yc:Float) extends Enemy(Archer,xc,yc) with Shooter{
@@ -173,6 +180,7 @@ object Catapult extends EnemyType {
   override val airAcc = 0
   override val arcs = true
   override val shotVel = 10.0f
+  override val inert = 5
 }
 class Catapult(xc: Float, yc: Float) extends Enemy(Catapult, xc, yc) with Shooter {
   stopDist = 650 + rand(50)
