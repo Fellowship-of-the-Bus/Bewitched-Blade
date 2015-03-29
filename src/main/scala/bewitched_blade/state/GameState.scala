@@ -15,16 +15,26 @@ class GameState extends BasicGameState {
 
   def reset() = gameState = new Game
 
+  var pauseTimer = 0
   def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
     implicit val input = gc.getInput
-    gameState.update(gc, game, delta)
+
+    if (pauseTimer == 0 && input.isKeyDown(Input.KEY_P)) {
+      gc.setPaused(!gc.isPaused)
+      pauseTimer = 15
+    }
+
+    if (! gc.isPaused) {
+      gameState.update(gc, game, delta)
+    }
+
+    pauseTimer = Math.max(0, pauseTimer-1)
   }
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
     val lightBlue = new Color(150,150,255,0)
     g.setBackground(lightBlue)
     images(CausewayID).draw(0, Ground)
-    gameState.castle.draw(g)
 
     def drawAll(objs: List[Enemy]*): Unit =
       for {
@@ -34,6 +44,7 @@ class GameState extends BasicGameState {
       } o.draw(g)
 
     drawAll(gameState.enemies)
+    gameState.castle.draw(g)
 
     gameState.blade.draw(g, IDMap.images(gameState.blade.id))
     
@@ -45,15 +56,6 @@ class GameState extends BasicGameState {
       g.setColor(new Color(255, 0, 0, (0.5 * 255).asInstanceOf[Int]))
       g.fillRect(0, 0, Width, Height)
       images(GameOverID).draw(0,0)
-//      g.drawImage(images(GameOverID), 0, 0)
-
-//    var i: Image = IDMap.images(gameState.blade.id)
-//    for (j <- 0 to 10) {
-//      i.setCenterOfRotation(10,10)
-//      i.setRotation(-j*10)
-//      g.drawImage(i, j*50, j*50)
-//      g.fillOval(j*50, j*50, 10,10)
-//    }
     }
   }
 
