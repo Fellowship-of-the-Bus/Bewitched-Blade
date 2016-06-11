@@ -9,7 +9,7 @@ import game._
 import lib.util.Native
 import lib.game.GameConfig
 
-class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {    
+class BewitchedBlade(gamename: String) extends StateBasedGame(gamename) {
   def initStatesList(gc: GameContainer) = {
     gc.setShowFPS(true)
     addState(Menu)
@@ -24,7 +24,6 @@ object BewitchedBlade extends App {
   GameConfig.Width = 800
   GameConfig.Height = 600
   GameConfig.FrameRate = 60
-  val Ground = 450
   lazy val game = new GameState
 
   try {
@@ -37,7 +36,7 @@ object BewitchedBlade extends App {
     appgc.start()
   } catch {
     case ex: SlickException => Logger.getLogger(BewitchedBlade.getClass.getName()).log(Level.SEVERE, null, ex)
-    case t: Throwable => 
+    case t: Throwable =>
       println("Library path is: " + System.getProperty("java.library.path"))
       t.printStackTrace
   }

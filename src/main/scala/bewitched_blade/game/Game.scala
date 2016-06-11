@@ -7,6 +7,10 @@ import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 import IDMap._
 import lib.game.GameConfig.{Height,Width}
 
+object Game {
+  val Ground = 450
+}
+
 class Game {
   val blade = new Blade(300,400)
   var towerHeight = 520
@@ -61,12 +65,6 @@ class Game {
       // periodically remove inactive objects
       cleanup
       var curEP = enemyPower / 4
-      var startMod = 0
-      // var startMod: Int = math.min(
-      //                   math.max(math.floor(math.log10(score)-4).asInstanceOf[Int], 0),
-      //                   2)
-      // var eTypeFrame = EnemyEnd-EnemyStart
-      var eTypeFrame = 1
       while (curEP > 0) {
         // val e = Enemy(math.min(rand(eTypeFrame)+ EnemyStart + startMod, EnemyEnd - 1))
         //val e = Enemy(KnightID)

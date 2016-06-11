@@ -5,7 +5,7 @@ package game
 import org.newdawn.slick.{Graphics}
 import IDMap._
 import lib.game.GameConfig.{Width,Height}
-import ui.{Image}
+import lib.slick2d.ui.{Image}
 
 trait ProjectileType {
   def id: Int
@@ -32,7 +32,7 @@ abstract class Projectile(base: ProjectileType, xc: Float, yc: Float, xv: Float,
   protected[game] var yVel = yv
 
   protected[game] var reflected = false
-  
+
   var ang: Float = 0
 
   val id = base.id

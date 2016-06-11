@@ -2,7 +2,7 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade.game
 
 import bewitched_blade.BewitchedBlade._
-import ui.{Image, Animation}
+import lib.slick2d.ui.{Image, Animation, Drawable}
 
 object IDMap{
   val bladeID = 1
@@ -28,7 +28,7 @@ object IDMap{
 
   val imageMap = Map(
     bladeID -> "img/Blade.png",
-    ArrowID -> "img/Arrow.png", 
+    ArrowID -> "img/Arrow.png",
     RockID -> "img/Boulder.png",
 
     KnightID -> Array("img/Knight.png", "img/Knight2.png"),
@@ -47,7 +47,7 @@ object IDMap{
     GameOverID -> "img/GameOver.png"
   )
 
-  lazy val images: Map[Int, ui.Drawable] = imageMap.map { x =>
+  lazy val images: Map[Int, Drawable] = imageMap.map { x =>
     val (id, loc) = x
     val img = loc match {
       case xs: Array[String] => Animation(xs)
@@ -60,7 +60,7 @@ object IDMap{
   //   case (id, xs: Array[Image]) => true
   //   case _ => false
   // } map {
-  //   case (id, imgs: Array[Image]) => 
+  //   case (id, imgs: Array[Image]) =>
   //     val duration = Array(30, 30)
   //     id -> new Animation(imgs, duration, false)
   // }

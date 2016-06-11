@@ -3,10 +3,10 @@ package bewitched_blade
 package game
 
 import IDMap._
-import BewitchedBlade.Ground
+import Game.Ground
 import lib.util.rand
 import lib.game.GameConfig.{Width,Height}
-import lib.game.Lifebar
+import lib.slick2d.game.Lifebar
 import org.newdawn.slick.Graphics
 
 object Enemy {
@@ -14,7 +14,7 @@ object Enemy {
     eid match {
       case KnightID => new Knight(Width, Ground-20)
       case ArcherID => new Archer(Width, Ground-20)
-      case CatapultID => new Catapult(Width, Ground -20) 
+      case CatapultID => new Catapult(Width, Ground -20)
     }
   }
 }
@@ -45,9 +45,9 @@ abstract class Enemy (base: EnemyType, xc: Float, yc: Float) extends GameObject(
 
   val img = images(id).copy
   def update(delta: Long) = img.update(delta)
-  override def draw(g: Graphics) = {
-    super.draw(g)
+  def draw(g: Graphics): Unit = {
     val (x, y) = topLeftCoord
+    super.draw(g, x, y)
     img.draw(x, y)
   }
   override def move() = {

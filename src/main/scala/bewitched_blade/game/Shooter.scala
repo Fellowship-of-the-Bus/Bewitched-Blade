@@ -2,6 +2,7 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade
 package game
 import BewitchedBlade._
+import Game._
 import lib.game.GameConfig.{Width,Height}
 
 
@@ -33,7 +34,7 @@ trait Shooter {
     }
   }
 
-  def shoot = {
+  def shoot() = {
     import lib.util.rand
     val roll = rand(100)
     if (shotTimer == 0) {
@@ -42,9 +43,9 @@ trait Shooter {
     }
 
     if( shotDelayTimer == 0 && numShotLeft > 0) {
-      
-      var px: Float = x
-      var py: Float = y
+
+      val px: Float = x
+      val py: Float = y
 
       var xv: Float = 50 - x
       var yv: Float = (Height - BewitchedBlade.game.gameState.towerHeight - y)
@@ -54,18 +55,18 @@ trait Shooter {
       if (y < Ground - 20) { //In the Air
         if (roll > airAcc) {
           xv = xv + 40 - rand(80)
-          yv = yv + 75 - rand(150) 
+          yv = yv + 75 - rand(150)
         }
       } else { //On the ground
         if (roll > groundAcc) {
           xv = xv + 40 - rand(80)
-          if (arcs == true) 
+          if (arcs == true)
             yv = yv + 250 - rand(500)
-          else 
+          else
             yv = yv + 75 - rand(150)
         }
       }
-      var norm = math.sqrt(xv*xv + yv*yv).asInstanceOf[Float]
+      val norm = math.sqrt(xv*xv + yv*yv).asInstanceOf[Float]
       xv = xv / norm * shotVel
       yv = yv / norm * shotVel
 

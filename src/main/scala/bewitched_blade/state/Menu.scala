@@ -2,7 +2,7 @@ package com.github.fellowship_of_the_bus
 package bewitched_blade
 package state
 
-import lib.ui.{Button, ToggleButton}
+import lib.slick2d.ui.{Button, ToggleButton}
 import game.IDMap._
 import lib.game.GameConfig
 import lib.game.GameConfig.{Width,Height}
@@ -20,13 +20,10 @@ object Menu extends BasicGameState {
 
   lazy val choices = List(
     Button("Play Game", centerx, 200, () => SBGame.enterState(Mode.GameID)),
-    Button("Options", centerx, 200+30, () => SBGame.enterState(Mode.OptionsID)), 
+    Button("Options", centerx, 200+30, () => SBGame.enterState(Mode.OptionsID)),
     Button("Quit", centerx, 200+60, () => System.exit(0)))
 
-  def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
-    import Mode._
-    implicit val input = gc.getInput
-  }
+  def update(gc: GameContainer, game: StateBasedGame, delta: Int) = ()
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
     //g.drawImage(background.....)
@@ -52,15 +49,12 @@ object Options extends BasicGameState {
   implicit val id = getID
 
   lazy val choices = List(
-    ToggleButton("Display Lifebars", centerx, 200, 
+    ToggleButton("Display Lifebars", centerx, 200,
       () => GameConfig.showLifebars = !GameConfig.showLifebars, // update
       () => GameConfig.showLifebars), // query
     Button("Back", centerx, 200+30, () => SBGame.enterState(Mode.MenuID)))
 
-  def update(gc: GameContainer, game: StateBasedGame, delta: Int) = {
-    import Mode._
-    val input = gc.getInput
-  }
+  def update(gc: GameContainer, game: StateBasedGame, delta: Int) = ()
 
   def render(gc: GameContainer, game: StateBasedGame, g: Graphics) = {
     for ( item <- choices ) {
@@ -69,7 +63,7 @@ object Options extends BasicGameState {
   }
 
   def init(gc: GameContainer, game: StateBasedGame) = {
-    
+
   }
 
   def getID() = Mode.OptionsID

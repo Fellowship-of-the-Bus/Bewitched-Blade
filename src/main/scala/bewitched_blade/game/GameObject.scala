@@ -16,7 +16,7 @@ abstract class GameObject(xc: Float, yc: Float) {
 
   private var isActive = true
   def active = isActive
-  def inactivate = isActive = false
+  def inactivate() = isActive = false
 
   def move()
 

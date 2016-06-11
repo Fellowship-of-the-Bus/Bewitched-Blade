@@ -4,10 +4,10 @@ package state
 import org.newdawn.slick.{AppGameContainer, GameContainer, Graphics, SlickException, Color, Input}
 import org.newdawn.slick.state.{BasicGameState, StateBasedGame}
 
-import BewitchedBlade.{Ground}
 import game._
+import Game.{Ground}
 import game.IDMap._
-import ui.Image
+import lib.slick2d.ui.Image
 import lib.game.GameConfig.{Width,Height}
 
 class GameState extends BasicGameState {
@@ -47,7 +47,7 @@ class GameState extends BasicGameState {
     gameState.castle.draw(g)
 
     gameState.blade.draw(g, IDMap.images(gameState.blade.id))
-    
+
     for (p <- gameState.enemyProjectiles; if (p.active)) {
       p.draw(g)
     }
@@ -60,7 +60,7 @@ class GameState extends BasicGameState {
   }
 
   def init(gc: GameContainer, game: StateBasedGame) = {
-    
+
   }
 
   def getID() = Mode.GameID

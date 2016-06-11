@@ -7,25 +7,25 @@ import org.newdawn.slick.{Graphics}
 
 class Castle(ga: Game) {
   val width = 50
-  val height = 100 
+  val height = 100
   var maxHp = 100
   var hp = maxHp
   val game = ga
 
-  def resetHp = hp = maxHp
+  def resetHp() = hp = maxHp
   var levels = 2
 
 
   private var isActive = true
   def active = isActive
-  def inactivate = isActive = false
+  def inactivate() = isActive = false
 
   def draw(g: Graphics): Unit = {
     if (game.isGameOver) {
-      return 
+      return
     }
     var img = IDMap.images(BaseID)
-    img.draw(0, Height-285)  
+    img.draw(0, Height-285)
     for (i <- 1 to levels) {
       img = IDMap.images(TowerLvlID)
       img.draw(0, Height - i*111-285)
@@ -51,7 +51,7 @@ class Castle(ga: Game) {
       }
     }
   }
-  def collapse = {
+  def collapse() = {
     if (levels == 0) {
       game.gameOver
     } else {

@@ -4,7 +4,7 @@ package game
 
 import scala.math._
 import org.newdawn.slick.{Graphics}
-import ui.Drawable
+import lib.slick2d.ui.Drawable
 
 
 class Blade (xc : Float, yc : Float) {
@@ -38,12 +38,12 @@ class Blade (xc : Float, yc : Float) {
     private var by6 = y + -10*cos(ang)
 
     def move(mx : Float, my : Float) = {
-   	  var xVec = mx - x
-      var yVec = my - y
+   	  val xVec = mx - x
+      val yVec = my - y
       var mTheta = atan2(yVec, xVec)
       mTheta = toDegrees(mTheta)
 
-      var dTheta = ((mTheta - ang) + 360) % 360
+      val dTheta = ((mTheta - ang) + 360) % 360
       if (dTheta < 180) {
     	angVel = min(10.0f, floor(dTheta).asInstanceOf[Float])
       } else {
@@ -66,7 +66,7 @@ class Blade (xc : Float, yc : Float) {
 	  by5 = y + 30*sAng + 10*cAng
 	  by6 = y + 30*sAng - 10*cAng
 
-      var norm = sqrt((xVec * xVec) + (yVec * yVec)) 
+      var norm = sqrt((xVec * xVec) + (yVec * yVec))
       if (norm < 0.01) {
           norm = 0.1
       }
@@ -90,12 +90,12 @@ class Blade (xc : Float, yc : Float) {
 
     	x += xVel
     	y += yVel
-      
+
         // if (y >590 ) {
         //   y = 590
         // }
 
-        
+
       }
     }
 
@@ -152,7 +152,7 @@ class Blade (xc : Float, yc : Float) {
     		if (abs(y1 - y3) < abs (y2 - y3)) {
     			atan2(y4 - y1, x4 - x2)
     		} else {
-   				atan2(y4 - y2, x4 - x2) 			
+   				atan2(y4 - y2, x4 - x2)
     		}
     	}
     }
@@ -194,12 +194,11 @@ class Blade (xc : Float, yc : Float) {
       			xVec = ex2 - x
       			yVec = ey2 - y
       			collide = true
-      		} 
+      		}
 
       		if (collide) {
       			norm = sqrt((xVec * xVec) + (yVec * yVec))
-      			var theta = toDegrees(atan2(yVec, xVec))
-      			var dTheta = theta - ang
+      			val theta = toDegrees(atan2(yVec, xVec))
       			ang -= floor(cos(theta) * norm * resist).asInstanceOf[Float]
       			xVec = xVec * sin(theta)
       			yVec = yVec * sin(theta)
@@ -239,9 +238,9 @@ class Blade (xc : Float, yc : Float) {
     def collision(p: Projectile) {
       if (! p.reflected) {
         val pSize = max(p.width, p.height)
-        var xVec: Double = p.x - x
-        var yVec: Double = p.y - y
-        var norm = sqrt((xVec * xVec) + (yVec * yVec))
+        val xVec: Double = p.x - x
+        val yVec: Double = p.y - y
+        val norm = sqrt((xVec * xVec) + (yVec * yVec))
         if (norm - pSize < 70) {
           val px1 = p.x-p.width/2
           val px2 = p.x+p.width/2
@@ -259,7 +258,7 @@ class Blade (xc : Float, yc : Float) {
            || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx5,by5)
            || inRect(px1,py1,px2,py1,px2,py2,px1,py2,bx6,by6)) {
 
-            p.xVel *= -1 
+            p.xVel *= -1
             p.yVel *= -1
 
             p.reflected = true
@@ -274,7 +273,7 @@ class Blade (xc : Float, yc : Float) {
     //     val (x2, y2) = bottomRightCoord
     //     val (cx1, cy1) = cand.topLeftCoord
     //     val (cx2, cy2) = cand.bottomRightCoord
-        
+
     //     def inRange(v: Float, min: Float, max: Float) = {
     //       (v >= min) && (v <= max)
     //     }
